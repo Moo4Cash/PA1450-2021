@@ -18,6 +18,11 @@ def serve(options):
         """Return a greeting for the user."""
         return "Hello, {}!".format(name)
 
+    @app.route("/goodbye")
+    def goodbye(name):
+        """Return a greeting for the user."""
+        return "Goodbye, {}!".format(name)
+
     app.run(host=options.address, port=options.port, debug=True)
 
 def create_parser(subparsers):
