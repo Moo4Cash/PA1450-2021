@@ -18,6 +18,12 @@ def serve(options):
         """Return a greeting for the user."""
         return "Hello, {}!".format(name)
 
+    @app.route("/alldatafiles")
+    def show_all_files():
+        """Shows the name of all files."""
+        file_list = ["hello"]
+        return file_list
+
     app.run(host=options.address, port=options.port, debug=True)
 
 def create_parser(subparsers):
