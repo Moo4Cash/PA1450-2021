@@ -25,7 +25,11 @@ def serve(options):
         return "Goodbye, {}!".format(name)
 
 
-    def 
+    def arrange(contries):
+        un_arranged_file = open("jhdata\COVID-19-master\csse_covid_19_data\csse_covid_19_daily_reports\04-15-2021.csv", "r")
+        line_to_be_split = un_arranged_file.readline()
+        current_line_list = line_to_be_split.split(',')
+
 
     app.run(host=options.address, port=options.port, debug=True)
 
