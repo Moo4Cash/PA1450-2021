@@ -1,6 +1,7 @@
 """Module for serving an API."""
 
 from flask import Flask, send_file
+import csv
 
 def serve(options):
     """Serve an API."""
@@ -22,6 +23,9 @@ def serve(options):
     def goodbye(name):
         """Return a greeting for the user."""
         return "Goodbye, {}!".format(name)
+
+
+    def 
 
     app.run(host=options.address, port=options.port, debug=True)
 
