@@ -1,6 +1,7 @@
 """Module for serving an API."""
 
 from flask import Flask, send_file
+from flask import render_template
 
 def serve(options):
     """Serve an API."""
@@ -22,7 +23,7 @@ def serve(options):
     def show_all_files():
         """Shows the name of all files."""
         file_list = ["hello"]
-        return file_list
+        return render_template("alldatafiles.html", file_list=file_list)
 
     app.run(host=options.address, port=options.port, debug=True)
 
