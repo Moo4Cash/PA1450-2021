@@ -1,9 +1,10 @@
 """Module for serving an API."""
 
-from flask import Flask, send_file
-from flask import render_template
+from flask import Flask, send_file, render_template
+
 import pandas as pd
 
+import csv
 def serve(options):
     """Serve an API."""
 
@@ -19,6 +20,7 @@ def serve(options):
     def greeting(name):
         """Return a greeting for the user."""
         return "Hello, {}!".format(name)
+
 
     @app.route("/deathspercountry")
     def deathspercountry():
@@ -36,6 +38,19 @@ def serve(options):
                 country_deaths += int(value)
             data_list.append(country + " - " + str(country_deaths))
         return render_template("deathspercountry.html",data_list=data_list)
+
+    @app.route("/goodbye")
+    def goodbye(name):
+        """Return a greeting for the user."""
+        return "Goodbye, {}!".format(name)
+
+
+    def arrange(contries):
+        un_arranged_file = open("jhdata\COVID-19-master\csse_covid_19_data\csse_covid_19_daily_reports\04-15-2021.csv", "r")
+        line_to_be_split = un_arranged_file.readline()
+        current_line_list = line_to_be_split.split(',')
+
+
 
     app.run(host=options.address, port=options.port, debug=True)
 
