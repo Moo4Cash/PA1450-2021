@@ -37,8 +37,6 @@ def serve(options):
             data_list.append(country + " - " + str(country_deaths))
         return render_template("deathspercountry.html",data_list=data_list)
 
-        return 
-
     app.run(host=options.address, port=options.port, debug=True)
 
 def create_parser(subparsers):
