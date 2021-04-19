@@ -39,9 +39,9 @@ def serve(options):
             data_list.append(country + " - " + str(country_deaths))
         return render_template("deathspercountry.html",data_list=data_list)
 
-    @app.route("/goodbye")
+    @app.route("/casespercapita")
     def goodbye(name):
-        """Return a greeting for the user."""
+        """Display a list showing the cases per capita for the countries"""
         return "Goodbye, {}!".format(name)
 
 
