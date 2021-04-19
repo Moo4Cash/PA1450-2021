@@ -2,12 +2,13 @@
 
 from flask import Flask, send_file
 from flask import render_template
+import pandas as pd
 
 def serve(options):
     """Serve an API."""
 
     # Create a Flask application
-    app = Flask(__name__)
+    app = Flask(__name__,template_folder="templates")
 
     @app.route("/")
     def index():
@@ -19,11 +20,22 @@ def serve(options):
         """Return a greeting for the user."""
         return "Hello, {}!".format(name)
 
-    @app.route("/alldatafiles")
-    def show_all_files():
-        """Shows the name of all files."""
-        file_list = ["hello"]
-        return render_template("alldatafiles.html", file_list=file_list)
+    @app.route("/deathspercountry")
+    def deathspercountry():
+        """Return an page showing urbanisation data"""
+        
+        covid_data_frame = pd.read_csv("jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_daily_reports/04-15-2021.csv", dtype="category", sep=",")
+        countries = covid_data_frame["Country_Region"].cat.categories
+
+        data_list = []
+
+        for country in countries:
+            country_deaths = 0
+            country_data = covid_data_frame.loc[(covid_data_frame["Country_Region"] == country)]
+            for value in country_data["Deaths"].values:
+                country_deaths += int(value)
+            data_list.append(country + " - " + str(country_deaths))
+        return render_template("deathspercountry.html",data_list=data_list)
 
     app.run(host=options.address, port=options.port, debug=True)
 
