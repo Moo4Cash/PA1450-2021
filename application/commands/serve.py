@@ -50,7 +50,7 @@ def serve(options):
         for value in country_data["Deaths"].values:
             country_deaths += int(value)
         for value in country_data["Confirmed"].values:
-            country_cases += int(value)   
+            country_cases += int(value)
 
         try:
             urban_data = urban_data_frame.loc[(urban_data_frame["Entity"] == country_name) & ((urban_data_frame["Year"] == "2017"))]
@@ -84,12 +84,6 @@ def serve(options):
         """Display a list showing the cases per capita for the countries"""
         return "Goodbye, {}!".format(name)
 
-
-
-    def arrange(contries):
-        un_arranged_file = open("jhdata\COVID-19-master\csse_covid_19_data\csse_covid_19_daily_reports\04-15-2021.csv", "r")
-        line_to_be_split = un_arranged_file.readline()
-        current_line_list = line_to_be_split.split(',')
 
     app.run(host=options.address, port=options.port, debug=True)
 
