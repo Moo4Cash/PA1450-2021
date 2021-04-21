@@ -4,7 +4,7 @@ import pandas as pd
 def get_data(filename_read_from, unique_identifier, column_name, file_write_to):
     covid_data_frame = pd.read_csv(filename_read_from, dtype="category", sep=",")
     countries = covid_data_frame[unique_identifier]
-    dynamic_data = covid_data_frame[column_name]
+    dynamic_data = covid_data_frame[column_name].astype(float)
 
 
     final_countries = []
@@ -17,7 +17,7 @@ def get_data(filename_read_from, unique_identifier, column_name, file_write_to):
             final_dynamic_data.append(dynamic_data[x])
         else:
             index = final_countries.index(countries[x])
-            final_dynamic_data[index] = final_dynamic_data[index] + dynamic_data[x]
+            final_dynamic_data[index] = float(final_dynamic_data[index]) + float(dynamic_data[x])
 
     with open(file_write_to, "w") as write_to_file:
         write_to_file.write(unique_identifier + "," + column_name + "\n")
