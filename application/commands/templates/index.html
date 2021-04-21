@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="description" content="PA1450"/>
+        <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon">  
+        <link type="text/css" rel="stylesheet" href="static/style.css"/>
+        <link type="text/css" rel="stylesheet" href="static/index.css"/>
+        <title>PA1450</title>
+    </head>
+    <body>
+        <h1>Covid statistics app</h1>
+        <h2>Welcome</h2>
+        <div class="content">
+            <div class="select">
+                {% set counter = 0 %}
+                <select id="selectMenu">
+                    <option selected disabled>Choose country</option>
+                    {% for country in countries %}
+                        <option value={{country_links[counter+loop.index0]}}>{{country}}</option>
+                        {% set counter = counter + 1 %}
+                    {% endfor %}
+                    </select>
+                <button class="A" onclick="window.location.href=document.getElementById('selectMenu').value;">View Data</button>
+            </div>
+            <button class="B" onclick="window.location.href='/data'">View data from all countries</button>
+        </div>
+    </body>
+</html>
