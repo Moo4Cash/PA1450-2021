@@ -1,0 +1,474 @@
+Afghanistan: 39540683
+Africa: 1360921341
+African Group: 1371687302
+African Union: 1372299174
+African Union: Central Africa: 163301750
+African Union: Eastern Africa: 402702430
+African Union: Northern Africa: 210501024
+African Union: Southern Africa: 188115181
+African Union: Western Africa: 407678789
+African, Caribbean and Pacific (ACP) Group of States: 1209534969
+Albania: 2890031
+Algeria: 44464636
+American Samoa: 55540
+Andean Community: 114346667
+Andorra: 77471
+Angola: 33449555
+Anguilla: 15145
+Antigua and Barbuda: 98760
+Argentina: 45565509
+Armenia: 2976041
+Aruba: 107140
+Asia: 4681379220
+Asia-Pacific Economic Cooperation (APEC): 2987119543
+Asia-Pacific Group: 4660162302
+Association of Southeast Asian Nations (ASEAN): 673774600
+Australia: 25723124
+Australia/New Zealand: 30578815
+Austria: 9045910
+Azerbaijan: 10230448
+BRIC: 3197530598
+BRICS: 3257572594
+Bahamas: 396982
+Bahrain: 1738865
+Bangladesh: 166681377
+Barbados: 288241
+Belarus: 9451379
+Belgium: 11628008
+Belize: 403775
+Belt-Road Initiative (BRI): 3452220995
+Belt-Road Initiative: Africa: 1221461273
+Belt-Road Initiative: Asia: 1591629868
+Belt-Road Initiative: Europe: 413100438
+Belt-Road Initiative: Latin America and the Caribbean: 210390062
+Belt-Road Initiative: Pacific: 15639354
+Benin: 12317830
+Bermuda: 62229
+Bhutan: 780684
+Black Sea Economic Cooperation (BSEC): 343582505
+Bolivarian Alliance for the Americas (ALBA): 59190891
+Bolivia (Plurinational State of): 11811801
+Bonaire, Sint Eustatius and Saba: 26394
+Bosnia and Herzegovina: 3273599
+Botswana: 2387543
+Brazil: 214393462
+British Virgin Islands: 30468
+Brunei Darussalam: 442211
+Bulgaria: 6909055
+Burkina Faso: 21251454
+Burundi: 12093572
+Cabo Verde: 562461
+Cambodia: 16938856
+Cameroon: 26958062
+Canada: 37998307
+Caribbean: 43806116
+Caribbean Community and Common Market (CARICOM): 19028295
+Cayman Islands: 66343
+Central African Republic: 4884748
+Central America: 181748024
+Central Asia: 75259489
+Central European Free Trade Agreement (CEFTA): 25650335
+Central and Southern Asia: 2037197227
+Chad: 16689257
+Channel Islands: 175029
+Chile: 19305836
+China: 1446757893
+China (and dependencies): 1476282301
+China, Hong Kong SAR: 7561972
+China, Macao SAR: 657596
+China, Taiwan Province of China: 23925362
+Colombia: 51494377
+Commonwealth of Independent States (CIS): 291463836
+Commonwealth of Nations: 2600819023
+Commonwealth: Africa: 598331301
+Commonwealth: Asia: 1845524173
+Commonwealth: Caribbean and Americas: 44957746
+Commonwealth: Europe: 69865492
+Commonwealth: Pacific: 42140311
+Comoros: 882408
+Congo: 5602976
+Cook Islands: 17632
+Costa Rica: 5145296
+Countries with Access to the Sea: 7267065757
+Countries with Access to the Sea: Africa: 1022865602
+Countries with Access to the Sea: Asia: 4510043592
+Countries with Access to the Sea: Europe: 679137856
+Countries with Access to the Sea: Latin America and the Caribbean: 640691035
+Countries with Access to the Sea: Northern America: 371107718
+Countries with Access to the Sea: Oceania: 43219954
+Croatia: 4091793
+Cuba: 11346474
+Curaçao: 164630
+Cyprus: 1216679
+Czechia: 10721931
+Côte d'Ivoire: 26773561
+Dem. People's Republic of Korea: 25914693
+Democratic Republic of the Congo: 91063592
+Denmark: 5808212
+Denmark (and dependencies): 5919223
+Djibouti: 999706
+Dominica: 72472
+Dominican Republic: 10965209
+ECE: North America-2: 370982987
+ECE: UNECE-52: 1305843008
+ECLAC: Latin America: 647697525
+ECLAC: The Caribbean: 12042559
+ESCAP region: East and North-East Asia: 1658999600
+ESCAP region: North and Central Asia: 238509895
+ESCAP region: Pacific: 43207492
+ESCAP region: South and South-West Asia: 2047315126
+ESCAP region: South-East Asia: 675118475
+ESCAP: ADB Developing member countries (DMCs): 4097870217
+ESCAP: ADB Group A (Concessional assistance only): 167989079
+ESCAP: ADB Group B (OCR blend): 1832658557
+ESCAP: ADB Group C (Regular OCR only): 2097222580
+ESCAP: ASEAN: 673774600
+ESCAP: Central Asia: 92597873
+ESCAP: ECO: 520756825
+ESCAP: HDI groups: 4663150588
+ESCAP: Landlocked countries (LLDCs): 169616988
+ESCAP: Least Developed Countries (LDCs): 318221207
+ESCAP: Pacific island dev. econ.: 12558633
+ESCAP: SAARC: 1877243630
+ESCAP: WB High income econ.: 223363964
+ESCAP: WB Low income econ.: 95397393
+ESCAP: WB Lower middle income econ.: 2440536039
+ESCAP: WB Upper middle income econ.: 1903834006
+ESCAP: WB income groups: 4663131402
+ESCAP: high HDI: 222782340
+ESCAP: high income: 223012647
+ESCAP: income groups: 4663150588
+ESCAP: low HDI: 1955803129
+ESCAP: low income: 2120185472
+ESCAP: lower middle HDI: 2080729345
+ESCAP: lower middle income: 592023056
+ESCAP: other Asia-Pacific countries/areas: 204426380
+ESCAP: upper middle HDI: 403835774
+ESCAP: upper middle income: 1727929413
+ESCWA: Arab countries: 444817790
+ESCWA: Arab least developed countries: 98425253
+ESCWA: Gulf Cooperation Council countries: 59562511
+ESCWA: Maghreb countries: 100855715
+ESCWA: Mashreq countries: 185974311
+ESCWA: member countries: 381951011
+East African Community (EAC): 200520996
+Eastern Africa: 452799252
+Eastern Asia: 1685890804
+Eastern Europe: 292823655
+Eastern European Group: 339244866
+Eastern and South-Eastern Asia: 2361031887
+Economic Community of Central African States (ECCAS): 210511878
+Economic Community of West African States (ECOWAS): 407678789
+Economic Cooperation Organization (ECO): 520756825
+Ecuador: 17880289
+Egypt: 103727869
+El Salvador: 6546139
+Equatorial Guinea: 1428088
+Eritrea: 3584132
+Estonia: 1327775
+Eswatini: 1172027
+Ethiopia: 116852602
+Eurasian Economic Community (Eurasec): 224663584
+Europe: 748336024
+Europe (48): 747747396
+Europe and Northern America: 1119152584
+European Community (EC: 12): 385421562
+European Free Trade Agreement (EFTA): 14562737
+European Union (EU: 15): 410173154
+European Union (EU: 28): 513514764
+Falkland Islands (Malvinas): 3532
+Faroe Islands: 48979
+Fiji: 903224
+Finland: 5550886
+France: 65419391
+France (and dependencies): 68325350
+French Guiana: 303869
+French Polynesia: 283101
+Gabon: 2260239
+Gambia: 2457051
+Georgia: 3986534
+Germany: 83932161
+Ghana: 31515856
+Gibraltar: 33752
+Greater Arab Free Trade Area (GAFTA): 421792527
+Greece: 10403960
+Greenland: 56994
+Grenada: 113222
+Group of 77 (G77): 6209983083
+Group of Eight (G8): 920847038
+Group of Seven (G7): 774935016
+Group of Twenty (G20) - member states: 4682214258
+Guadeloupe: 400710
+Guam: 170349
+Guatemala: 18194456
+Guinea: 13355473
+Guinea-Bissau: 1997358
+Gulf Cooperation Council (GCC): 59562511
+Guyana: 793026
+Haiti: 11535710
+High-income countries: 1267994133
+Holy See: 801
+Honduras: 10053511
+Hungary: 9647218
+Iceland: 343531
+India: 1393991220
+Indonesia: 276241098
+Iran (Islamic Republic of): 85036521
+Iraq: 40872603
+Ireland: 4980981
+Isle of Man: 85260
+Israel: 8747888
+Italy: 60430659
+Jamaica: 2983597
+Japan: 126263669
+Jordan: 10344044
+Kazakhstan: 18945001
+Kenya: 54650352
+Kiribati: 120916
+Kuwait: 4318291
+Kyrgyzstan: 6609506
+LLDC: Africa: 350620870
+LLDC: Asia: 169616988
+LLDC: Europe: 6106687
+LLDC: Latin America: 19052577
+Land-locked Countries: 607900787
+Land-locked Countries (Others): 62503665
+Land-locked Developing Countries (LLDC): 541321067
+Lao People's Democratic Republic: 7374494
+Latin America and the Caribbean: 660244085
+Latin American Integration Association (ALADI): 578529334
+Latin American and Caribbean Group (GRULAC): 655179156
+Latvia: 1874742
+League of Arab States (LAS, informal name: Arab League): 444817790
+Least developed countries: 1073626719
+Least developed: Africa: 721565739
+Least developed: Asia: 347560074
+Least developed: Latin America and the Caribbean: 11541683
+Least developed: Oceania: 1151772
+Lebanon: 6887726
+Lesotho: 2156976
+Less developed regions: 6588792580
+Less developed regions, excluding China: 5109889757
+Less developed regions, excluding least developed countries: 5515165861
+Less developed: Africa: 1373486472
+Less developed: Asia: 4553609784
+Less developed: Latin America and the Caribbean: 659743612
+Less developed: Oceania: 12571095
+Liberia: 5136524
+Libya: 6958280
+Liechtenstein: 38283
+Lithuania: 2703413
+Low-income countries: 788049349
+Lower-middle-income countries: 3133151682
+Luxembourg: 633051
+Madagascar: 28162971
+Malawi: 19457942
+Malaysia: 32763617
+Maldives: 550377
+Mali: 20586244
+Malta: 443166
+Marshall Islands: 59826
+Martinique: 375347
+Mauritania: 4725381
+Mauritius: 1277635
+Mayotte: 277479
+Melanesia: 11268292
+Mexico: 130329171
+Micronesia: 554401
+Micronesia (Fed. States of): 116224
+Middle Africa: 182558742
+Middle-income countries: 5805773570
+Monaco: 39317
+Mongolia: 3318208
+Montenegro: 629077
+Montserrat: 4995
+More developed regions: 1275995068
+More developed: Asia: 126050796
+More developed: Europe: 747747396
+More developed: Northern America: 371107718
+More developed: Oceania: 30648859
+Morocco: 37329176
+Mozambique: 31777898
+Myanmar: 54848699
+Namibia: 2574877
+Nauru: 10918
+Nepal: 29617960
+Netherlands: 17180498
+Netherlands (and dependencies): 17514951
+New Caledonia: 288045
+New EU member states (joined since 2004): 103341610
+New Zealand: 4855691
+New Zealand (and dependencies): 4881196
+Nicaragua: 6706460
+Niger: 24661099
+Nigeria: 208995195
+Niue: 1627
+No income group available: 2970596
+Non-Self-Governing Territories: 1775155
+North American Free Trade Agreement (NAFTA): 501245207
+North Atlantic Treaty Organization (NATO): 947457587
+North Macedonia: 2088601
+Northern Africa: 249523569
+Northern Africa and Western Asia: 532673675
+Northern America: 370816560
+Northern Europe: 106674924
+Northern Mariana Islands: 57991
+Norway: 5453781
+Oceania: 43090418
+Oceania (excluding Australia and New Zealand): 12511603
+Oman: 5194972
+Organisation for Economic Co-operation and Development (OECD): 1318569705
+Organization for Security and Co-operation in Europe (OSCE): 1300572464
+Organization of American States (OAS): 1026162143
+Organization of Petroleum Exporting countries (OPEC): 528757064
+Organization of the Islamic Conference (OIC): 1942165511
+Pakistan: 224192049
+Palau: 18177
+Panama: 4369216
+Papua New Guinea: 9066850
+Paraguay: 7221229
+Peru: 33388339
+Philippines: 110894996
+Poland: 37886821
+Polynesia: 688910
+Portugal: 10186330
+Puerto Rico: 2821523
+Qatar: 2914066
+Republic of Korea: 51491411
+Republic of Moldova: 4039197
+Romania: 19163611
+Russian Federation: 145969709
+Rwanda: 13169753
+Réunion: 901255
+SIDS Atlantic, and Indian Ocean, Mediterranean and South China Sea (AIMS): 16443157
+SIDS Caribbean: 43735517
+SIDS Pacific: 12558633
+Saint Barthélemy: 9953
+Saint Helena: 6103
+Saint Kitts and Nevis: 53637
+Saint Lucia: 185046
+Saint Martin (French part): 39124
+Saint Pierre and Miquelon: 5777
+Saint Vincent and the Grenadines: 111529
+Samoa: 199853
+San Marino: 34035
+Sao Tome and Principe: 222224
+Saudi Arabia: 35276694
+Senegal: 17023778
+Serbia: 8725091
+Seychelles: 98930
+Shanghai Cooperation Organization (SCO): 3278045781
+Sierra Leone: 8084541
+Singapore: 5899412
+Sint Maarten (Dutch part): 43333
+Slovakia: 5470385
+Slovenia: 2079841
+Small Island Developing States (SIDS): 72696389
+Solomon Islands: 698141
+Somalia: 16138856
+South Africa: 59895107
+South America: 434689945
+South Asian Association for Regional Cooperation (SAARC): 1877243630
+South Sudan: 11289106
+South-Eastern Asia: 675141083
+Southern Africa: 68186530
+Southern African Development Community (SADC): 372679732
+Southern Asia: 1961937738
+Southern Common Market (MERCOSUR): 310841940
+Southern Europe: 152215998
+Spain: 46827790
+Sri Lanka: 21546867
+State of Palestine: 5189553
+Sub-Saharan Africa: 1111397772
+Sudan: 44501546
+Suriname: 591816
+Sweden: 10146031
+Switzerland: 8704828
+Syrian Arab Republic: 17637072
+Tajikistan: 9696049
+Thailand: 70107582
+Timor-Leste: 1337116
+Togo: 8403339
+Tokelau: 1370
+Tonga: 106682
+Trinidad and Tobago: 1406426
+Tunisia: 11934653
+Turkey: 85289503
+Turkmenistan: 6105084
+Turks and Caicos Islands: 39164
+Tuvalu: 11907
+UN-ECE: member countries: 1306032146
+UNFPA Regions: 6512413360
+UNFPA: Arab States (AS): 384815089
+UNFPA: Asia and the Pacific (AP): 4116191131
+UNFPA: East and Southern Africa (ESA): 633081068
+UNFPA: Eastern Europe and Central Asia (EECA): 251490925
+UNFPA: Latin America and the Caribbean (LAC): 655712913
+UNFPA: West and Central Africa (WCA): 471122234
+UNICEF PROGRAMME REGIONS: 6595372286
+UNICEF Programme Regions: East Asia and Pacific (EAPRO): 2153918741
+UNICEF Programme Regions: Eastern Caribbean: 2413968
+UNICEF Programme Regions: Eastern and Southern Africa (ESARO): 555789154
+UNICEF Programme Regions: Europe and Central Asia (CEECIS): 282225060
+UNICEF Programme Regions: Latin America: 652458029
+UNICEF Programme Regions: Latin America and Caribbean (LACRO): 654871997
+UNICEF Programme Regions: Middle East and North Africa (MENARO): 507823484
+UNICEF Programme Regions: South Asia (ROSA): 1877243630
+UNICEF Programme Regions: West and Central Africa (WCARO): 563500220
+UNICEF REGIONS: 7874965732
+UNICEF Regions: East Asia and Pacific: 2401193037
+UNICEF Regions: Eastern Europe and Central Asia: 428137082
+UNICEF Regions: Eastern and Southern Africa: 604254243
+UNICEF Regions: Europe and Central Asia: 926603593
+UNICEF Regions: Latin America and Caribbean: 659743612
+UNICEF Regions: Middle East and North Africa: 471313584
+UNICEF Regions: North America: 371107718
+UNICEF Regions: South Asia: 1877243630
+UNICEF Regions: Sub-Saharan Africa: 1167760558
+UNICEF Regions: West and Central Africa: 563506315
+UNICEF Regions: Western Europe: 498466511
+UNITED NATIONS Regional Groups of Member States: 7869130402
+Uganda: 46654727
+Ukraine: 43564349
+United Arab Emirates: 10017751
+United Kingdom: 68176304
+United Kingdom (and dependencies): 68729427
+United Nations Economic Commission for Africa (UN-ECA): 1371687302
+United Nations Economic Commission for Latin America and the Caribbean (UN-ECLAC): 659740084
+United Nations Economic and Social Commission for Asia and the Pacific (UN-ESCAP) Regions: 4663150588
+United Nations Member States: 7869130292
+United Republic of Tanzania: 60774747
+United States Virgin Islands: 104542
+United States of America: 332693253
+United States of America (and dependencies): 336130735
+Upper-middle-income countries: 2672621888
+Uruguay: 3488706
+Uzbekistan: 33903849
+Vanuatu: 312032
+Venezuela (Bolivarian Republic of): 28448153
+Viet Nam: 98293002
+WB region: East Asia and Pacific (excluding high income): 2153935116
+WB region: Europe and Central Asia (excluding high income): 424055425
+WB region: Latin America and Caribbean (excluding high income): 580253966
+WB region: Middle East and North Africa (excluding high income): 403351622
+WB region: South Asia (excluding high income): 1877243630
+WB region: Sub-Saharan Africa (excluding high income): 1165472153
+WHO Regions: 7829939546
+WHO: African region (AFRO): 1148918838
+WHO: Americas (AMRO): 1026162143
+WHO: Eastern Mediterranean Region (EMRO): 739378959
+WHO: European Region (EURO): 935010905
+WHO: South-East Asia region (SEARO): 2040557839
+WHO: Western Pacific region (WPRO): 1939910862
+Wallis and Futuna Islands: 11198
+West African Economic and Monetary Union (UEMOA): 134678331
+Western Africa: 407853248
+Western Asia: 283150106
+Western Europe: 196621447
+Western European and Others Group (WEOG): 927899402
+Western Sahara: 607409
+World: 7864787648
+World Bank Regional Groups (developing only): 6604311912
+Yemen: 30311376
+Zambia: 18710377
+Zimbabwe: 15044804

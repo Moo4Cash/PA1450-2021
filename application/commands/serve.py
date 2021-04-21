@@ -40,6 +40,7 @@ def serve(options):
         return render_template("deathspercountry.html",data_list=data_list)
 
 
+
     @app.route("/newestdata")
     def newestdata():
         """Return a table of data."""
@@ -60,6 +61,12 @@ def serve(options):
             data = list(csv.reader(f))
 
         return render_template("newestdata.html",data=data)
+
+    @app.route("/casespercapita")
+    def goodbye(name):
+        """Display a list showing the cases per capita for the countries"""
+        return "Goodbye, {}!".format(name)
+
 
 
     def arrange(contries):
