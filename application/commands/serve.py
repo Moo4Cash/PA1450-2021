@@ -50,17 +50,6 @@ def serve(options):
 
         return render_template("newestdata.html",data=data)
 
-    
-    @app.route("/newestdataus")
-    def newestdataus():
-        """Return a table of data."""
-
-        file_path = "jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_daily_reports_us/04-15-2021.csv"
-        with open(file_path, newline="") as f:
-            data = list(csv.reader(f))
-
-        return render_template("newestdata.html",data=data)
-
 
     def arrange(contries):
         un_arranged_file = open("jhdata\COVID-19-master\csse_covid_19_data\csse_covid_19_daily_reports\04-15-2021.csv", "r")
