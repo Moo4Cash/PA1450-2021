@@ -13,7 +13,7 @@ def serve(options):
     covid_data_frame = pd.read_csv("jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_daily_reports/04-15-2021.csv", dtype="category", sep=",")
     urban_data_frame = pd.read_csv("urban_data/share-of-population-urban.csv", dtype="category", sep=",")
     countries = covid_data_frame["Country_Region"].cat.categories
-    country_links = [item.replace(" ", "") for item in countries]
+    country_links = [(item.replace(" ", "")).lower() for item in countries]
 
     @app.route("/")
     def index():
@@ -38,26 +38,21 @@ def serve(options):
         """Return the choice page"""
         return render_template("choose.html",countries=countries,country_links=country_links)
 
-    @app.route("/data/<country>")
+    @app.route("/<country>")
     def country(country):
         """Return a summarization of the choosen country"""
-        country_index = country_links.index(country)
-        country_name = countries[country_index]
+        country_name = countries[country_links.index(country)]
+        country_data = covid_data_frame.loc[(covid_data_frame["Country_Region"] == country_name)]
         country_deaths = 0
         country_cases = 0
-        country_data = covid_data_frame.loc[(covid_data_frame["Country_Region"] == country_name)]
-
-        for value in country_data["Deaths"].values:
-            country_deaths += int(value)
-        for value in country_data["Confirmed"].values:
-            country_cases += int(value)   
 
         try:
             urban_data = urban_data_frame.loc[(urban_data_frame["Entity"] == country_name) & ((urban_data_frame["Year"] == "2017"))]
             urban_population = float(urban_data["Urban population (% of total)"].values[0])
-            return f"{country_name} has {country_cases} confirmed cases and {country_deaths} deaths. {urban_population}% of {country_name} is urbanised."
+
+            return print(list(country_data.to_records(index=False))), print(list(urban_population.to_records(index=False)))
         except:
-            return f"{country_name} has {country_cases} confirmed cases and {country_deaths} deaths. Urbanization data is missing"
+            return print(list(country_data.to_records(index=False)))
 
     @app.route("/newestdata")
     def newestdata():
@@ -69,25 +64,12 @@ def serve(options):
 
         return render_template("newestdata.html",data=data)
 
-<<<<<<< HEAD
-=======
-    @app.route("/newestdataus")
-    def newestdataus():
-        """Return a table of data."""
-
-        file_path = "jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_daily_reports_us/04-15-2021.csv"
-        with open(file_path, newline="") as f:
-            data = list(csv.reader(f))
-
-        return render_template("newestdata.html",data=data)
 
     @app.route("/casespercapita")
     def goodbye(name):
         """Display a list showing the cases per capita for the countries"""
         return "Goodbye, {}!".format(name)
 
-
->>>>>>> 517ea3f5354ccd10d742accacc1d448293ecb9a1
 
     def arrange(contries):
         un_arranged_file = open("jhdata\COVID-19-master\csse_covid_19_data\csse_covid_19_daily_reports\04-15-2021.csv", "r")
@@ -104,3 +86,12 @@ def create_parser(subparsers):
     # Add optional parameters to control the server configuration
     parser.add_argument("-p", "--port", default=8080, type=int, help="The port to listen on")
     parser.add_argument("--address", default="0.0.0.0", help="The address to listen on")
+
+
+def daily_to_dataframe():
+    """Take daily csv file and read in to list"""
+
+    file_path = "jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_daily_reports/04-15-2021.csv"
+    data = pd.read_csv(filepath)
+    
+    data[["Country_Region", "Deaths", "Confirmed"]]
