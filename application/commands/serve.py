@@ -14,6 +14,10 @@ def serve(options):
     urban_data_frame = pd.read_csv("urban_data/share-of-population-urban.csv", dtype="category", sep=",")
     countries = covid_data_frame["Country_Region"].cat.categories
     country_links = [item.replace(" ", "") for item in countries]
+    final_doc_frame = pd.read_csv("/home/pa1450/PA1450-2021/final_doc.csv", dtype="category", sep=",")
+    final_doc_countries = final_doc_frame["Country"]
+    final_doc_cases_cap = final_doc_frame["CasesPer100 000"]
+    final_doc_population = final_doc_frame["Inhabitants"].astype(int)
 
     @app.route("/")
     def index():
@@ -43,6 +47,8 @@ def serve(options):
         """Return a summarization of the choosen country"""
         country_index = country_links.index(country)
         country_name = countries[country_index]
+        country_cases_per_cap = final_doc_cases_cap[country_index]
+        country_inhabitants = final_doc_population[country_index]
         country_deaths = 0
         country_cases = 0
         country_data = covid_data_frame.loc[(covid_data_frame["Country_Region"] == country_name)]
@@ -55,7 +61,7 @@ def serve(options):
         try:
             urban_data = urban_data_frame.loc[(urban_data_frame["Entity"] == country_name) & ((urban_data_frame["Year"] == "2017"))]
             urban_population = float(urban_data["Urban population (% of total)"].values[0])
-            return f"{country_name} has {country_cases} confirmed cases and {country_deaths} deaths. {urban_population}% of {country_name} is urbanised."
+            return f"{country_name} has {country_cases} confirmed cases and {country_deaths} deaths. {urban_population}% of {country_name} is urbanised. \n The country has {country_cases_per_cap} cases per 100 000 inhabitants and {country_inhabitants} currently live there"
         except:
             return f"{country_name} has {country_cases} confirmed cases and {country_deaths} deaths. Urbanization data is missing"
 
@@ -80,9 +86,13 @@ def serve(options):
         return render_template("newestdata.html",data=data)
 
     @app.route("/casespercapita")
-    def goodbye(name):
-        """Display a list showing the cases per capita for the countries"""
-        return "Goodbye, {}!".format(name)
+    def display_cases_per_capita():
+        
+        capita_data_list = []
+        for x in range(0, len(final_doc_countries)):
+            capita_data_list.append(str(final_doc_countries[x]) + " " + str(final_doc_cases_cap[x]))
+
+        return render_template("casespercapita.html",capita_data_list=capita_data_list)
 
 
     app.run(host=options.address, port=options.port, debug=True)
