@@ -40,7 +40,7 @@ def serve(options):
         try:
             urban_data = urban_data_frame.loc[(urban_data_frame["Entity"] == country_name) & ((urban_data_frame["Year"] == "2017"))]
             urban_population = float(urban_data["Urban population (% of total)"].values[0])
-            string = f"{country_name} has {country_cases} confirmed cases and {country_deaths} deaths. {urban_population}% of {country_name} is urbanised."
+            string = f"{country_name} has {country_cases} confirmed cases and {country_deaths} deaths. {urban_population}% of {country_name} is urbanised.\n The country has {country_cases_per_cap} cases per 100 000 inhabitants and {country_inhabitants} currently live there."
         except:
             string = f"{country_name} has {country_cases} confirmed cases and {country_deaths} deaths. Urbanization data is missing"
 
