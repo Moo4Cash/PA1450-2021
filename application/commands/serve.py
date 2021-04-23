@@ -1,6 +1,6 @@
 """Module for serving an API."""
 
-from flask import Flask, send_file, render_template
+from flask import Flask, send_file, render_template, redirect
 import pandas as pd
 import csv
 
@@ -10,12 +10,12 @@ def serve(options):
     # Create a Flask application
     app = Flask(__name__,template_folder="templates", static_folder="static")
 
-    covid_data_frame = pd.read_csv("jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_daily_reports/04-15-2021.csv", dtype="category", sep=",")
-    urban_data_frame = pd.read_csv("urban_data/share-of-population-urban.csv", dtype="category", sep=",")
+    covid_data_frame = pd.read_csv("data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_daily_reports/04-15-2021.csv", dtype="category", sep=",")
+    urban_data_frame = pd.read_csv("data/urban_data/share-of-population-urban.csv", dtype="category", sep=",")
     countries = covid_data_frame["Country_Region"].cat.categories
 
     country_links = [(item.replace(" ", "")).lower() for item in countries]
-    final_doc_frame = pd.read_csv("/home/pa1450/PA1450-2021/final_doc.csv", dtype="category", sep=",")
+    final_doc_frame = pd.read_csv("data\final_doc.csv", dtype="category", sep=",")
     final_doc_countries = final_doc_frame["Country"]
     final_doc_cases_cap = final_doc_frame["CasesPer100 000"]
     final_doc_population = final_doc_frame["Inhabitants"].astype(int)
