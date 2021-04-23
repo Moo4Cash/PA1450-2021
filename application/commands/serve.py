@@ -8,7 +8,7 @@ def serve(options):
     """Serve an API."""
 
     # Create a Flask application
-    app = Flask(__name__,template_folder="templates")
+    app = Flask(__name__,template_folder="templates", static_folder="static")
 
     covid_data_frame = pd.read_csv("jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_daily_reports/04-15-2021.csv", dtype="category", sep=",")
     urban_data_frame = pd.read_csv("urban_data/share-of-population-urban.csv", dtype="category", sep=",")
