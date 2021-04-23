@@ -20,10 +20,37 @@
     </style>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>{% block title %}{% endblock %}</title>
+    <title>Newest Data</title>
     <link rel="styleseet" href="/application/commands/templates/styles.css"/>
+
   </head>
   <body>
+
+    <!--Creates a checkbox for each cell on the first row in the csv file-->
+    <p>What information do you want to be shown?</p>
+    {% for row in data %}
+      {% for cell in row %}
+        {% if data.index(row) == 0 %}
+          <div>
+            <input type="checkbox" id="{{ cell }}" name="checkBox">
+            <label for="{{ cell }}">{{ cell }}</label>
+          </div>
+          {% endif %}
+      {% endfor %}
+    {% endfor %}
+
+    <!--Filters list by checkboxes-->
+    <button onclick="filter()">Filter</button>
+    <script>
+      function filter() {
+        var checkBox = document.getElementById("{{ cell }}");
+        if (checkBox.checked == true){
+
+        }
+      }
+    </script>
+    
+    <!--Creates table-->
     <table class="table">
       {% for row in data %}
         {% if data.index(row) == 0 %}
@@ -36,7 +63,7 @@
           <tr class="table__row">
             {% for cell in row %}
               {% if row.index(cell) == 3 %}
-                <td class="table__cell"><a href="{{cell}}.html">{{ cell }}</a></td>
+                <td class="table__cell"><a href='{{ (cell.replace(" ", "")).lower() }}'>{{ cell }}</a></td>
               {% else %}
                 <td class="table__cell">{{ cell }}</td>
               {% endif %}
@@ -45,5 +72,6 @@
         {% endif %}
       {% endfor %}
     </table>
+
   </body>
 </html>
