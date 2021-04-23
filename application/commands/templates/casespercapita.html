@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Cases per 100 000 population</title>
+    
+  </head>
+  <header>
+    <h1>Amount of cases per 100 000 population for each country</h1>
+    <h2>Note that not all countries have populations of 100 000 or more,</h2>
+    <h2>numbers may not accurately represent the situation in those countries</h2>
+    <br>
+  </header>
+  <body>
+    <ul> 
+      {% for file in capita_data_list %}
+        <li>{{ file }}</li> 
+      {% endfor %} 
+      </ul> 
+  </body>
+</html>
