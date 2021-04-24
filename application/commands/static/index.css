@@ -1,0 +1,14 @@
+body{
+    margin-top: 200px;
+}
+div.content{
+    margin: auto;
+    width: min-content;
+}
+div.select{
+    width: max-content;
+}
+button.B{
+    margin-top: 20px;
+    width: 100%;
+}
