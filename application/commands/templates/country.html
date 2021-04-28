@@ -8,9 +8,37 @@
         <meta name="description" content="PA1450"/>
         <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon">  
         <link type="text/css" rel="stylesheet" href="static/style.css"/>
-        <title>{{country}}</title>
+        <link type="text/css" rel="stylesheet" href="static/header.css"/>
+        <link type="text/css" rel="stylesheet" href="static/table.css"/>
+        <title>{{country_name}}</title>
     </head>
     <body>
-        <p>{{string}}</p>
+        <div class="header">
+            <a href="/" class="logo">Covid statistics app</a>
+            <div class="header-right">
+                <a href="/">Home</a>
+                <a href="/data">Data</a>
+                {% set counter = 0 %}
+                <div class="dropdown">
+                    <button class="dropbtn active">{{country_name}}</button>
+                    <div class="dropdown-content">
+                        {% for country in countries %}
+                            {% if country == country_name %}
+                                <a class="active" href="{{country_links[counter+loop.index0]}}">{{country}}</a>
+                            {% else %}
+                                <a href="{{country_links[counter+loop.index0]}}">{{country}}</a>
+                            {% endif %}
+                            {% set counter = counter + 1 %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <h3>{{country_name}}</h3>
+            {{html_code}}
+            <p>{{string}}</p>
+            <img src="{{ url_for('fig', country = country) }}" alt="Image Placeholder">
+        </div>
     </body>
 </html>
