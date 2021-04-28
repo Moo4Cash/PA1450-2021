@@ -1,12 +1,15 @@
 body{
     margin-top: 200px;
 }
-div.content{
+.content{
     margin: auto;
     width: min-content;
 }
-div.select{
+.selectdiv{
     width: max-content;
+}
+#selectMenu{
+    color:#484b6a;
 }
 button.B{
     margin-top: 20px;

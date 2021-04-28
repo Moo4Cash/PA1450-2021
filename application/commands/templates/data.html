@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="description" content="PA1450"/>
+        <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon">  
+        <link type="text/css" rel="stylesheet" href="static/style.css"/>
+        <link type="text/css" rel="stylesheet" href="static/header.css"/>
+        <link type="text/css" rel="stylesheet" href="static/table.css"/>
+        <title>Data</title>
+    </head>
+    <body>
+        <div class="header">
+            <a href="/" class="logo">Covid statistics app</a>
+            <div class="header-right">
+                <a href="/">Home</a>
+                <a class="active" href="/data">Data</a>
+                {% set counter = 0 %}
+                <div class="dropdown">
+                    <button class="dropbtn">Choose country</button>
+                    <div class="dropdown-content">
+                        {% for country in countries %}
+                            <a href="{{country_links[counter+loop.index0]}}">{{country}}</a>
+                            {% set counter = counter + 1 %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <table>
+                {% for row in data %}
+                    {% if data.index(row) == 0 %}
+                        <thead>
+                            <tr>
+                                {% for cell in row %}
+                                    <th>{{ cell }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                    {% else %}
+                        <tr>
+                            {% for cell in row %}
+                                {% if row.index(cell) == 0 %}
+                                    <td><a href='{{ (cell.replace(" ", "")).lower() }}'>{{ cell }}</a></td>
+                                {% else %}
+                                    <td>{{ cell }}</td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+    </body>
+</html>
