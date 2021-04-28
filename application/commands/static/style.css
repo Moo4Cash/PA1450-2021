@@ -3,13 +3,34 @@ body{
     margin: 0px;
     text-align: center;
     font-family: Helvetica, sans-serif;
-    color: #484b6a;
+    font-size: 16px;
+    color:#484b6a;
     background-color:#fafafa;
+}
+.content{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 150px;
+    margin-bottom: 50px;
+    width: max-content;
 }
 h1{               
     font-size: 50px;
 }
 h2{
     font-size: 40px;
-    color:#9394a5;
+    color:dodgerblue;
+}
+h3{
+    font-size: 30px;
+}
+a{
+    color:#484b6a;
+    text-decoration: none;
+}
+a:hover{
+    color:#9394a5
+}
+a:active{
+    color:#d2d3db;
 }

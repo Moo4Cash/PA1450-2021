@@ -15,7 +15,7 @@
         <h1>Covid statistics app</h1>
         <h2>Welcome</h2>
         <div class="content">
-            <div class="select">
+            <div class="selectdiv">
                 {% set counter = 0 %}
                 <select id="selectMenu">
                     <option selected disabled>Choose country</option>
@@ -23,7 +23,7 @@
                         <option value={{country_links[counter+loop.index0]}}>{{country}}</option>
                         {% set counter = counter + 1 %}
                     {% endfor %}
-                    </select>
+                </select>
                 <button class="A" onclick="window.location.href=document.getElementById('selectMenu').value;">View Data</button>
             </div>
             <button class="B" onclick="window.location.href='/data'">View data from all countries</button>
