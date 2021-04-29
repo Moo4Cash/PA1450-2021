@@ -7,9 +7,11 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="description" content="PA1450"/>
         <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon">  
-        <link type="text/css" rel="stylesheet" href="static/style.css"/>
-        <link type="text/css" rel="stylesheet" href="static/header.css"/>
-        <link type="text/css" rel="stylesheet" href="static/table.css"/>
+        <script src="static/javascript/sorttable.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link type="text/css" rel="stylesheet" href="static/css/style.css"/>
+        <link type="text/css" rel="stylesheet" href="static/css/header.css"/>
+        <link type="text/css" rel="stylesheet" href="static/css/table.css"/>
         <title>Data</title>
     </head>
     <body>
@@ -31,7 +33,8 @@
             </div>
         </div>
         <div class="content">
-            <table>
+            <h3>Data</h3>
+            <table id="table" class="sortable">
                 {% for row in data %}
                     {% if data.index(row) == 0 %}
                         <thead>

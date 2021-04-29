@@ -7,6 +7,8 @@ import datetime
 import matplotlib.pyplot as plt
 import matplotlib.dates as dts
 from io import BytesIO
+from PIL import Image
+
 
 def serve(options):
     """Serve an API."""
@@ -15,7 +17,9 @@ def serve(options):
     app = Flask(__name__,template_folder="templates", static_folder="static")
 
 
-    covid_data_frame = pd.read_csv("data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_daily_reports/04-15-2021.csv", dtype="category", sep=",")
+    deaths_data_frame = pd.read_csv("data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv", dtype="category", sep=",")
+    confirmed_data_frame = pd.read_csv("data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv", dtype="category", sep=",")
+    recovered_data_frame = pd.read_csv("data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv", dtype="category", sep=",")
     urban_data_frame = pd.read_csv("data/urban_data/share-of-population-urban.csv", dtype="category", sep=",")
     final_doc_frame = pd.read_csv("data/final_doc.csv", dtype="category", sep=",")
 
@@ -29,15 +33,59 @@ def serve(options):
     recovered = final_doc_frame["Recovered"]
 
 
+    def plot(country_name, stat_name, *data_frames):
+        """Returns a graph"""
+        plt.style.use("seaborn")
+        fig, ax = plt.subplots()
+        ax.set_title(f"{stat_name} in {country_name}", color="#484b6a", family="sans-serif", name="Helvetica", size="12", weight="bold")
+        for data_frame in data_frames:
+            x = []
+            y = []
+            country_data = data_frame.loc[(data_frame["Country/Region"] == country_name)].iloc[:,4:]
+            for column in country_data.columns:
+                date = dts.date2num(datetime.datetime.strptime(column,"%m/%d/%y"))
+                if date not in x:
+                    x.append(date)
+                total = 0
+                for value in country_data[column].values:
+                    total += int(value)
+                y.append(total)
+            plt.setp(ax.get_xticklabels(), color="#484b6a", family="sans-serif", name="Helvetica", size="10")
+            plt.setp(ax.get_yticklabels(), color="#484b6a", family="sans-serif", name="Helvetica", size="10")
+            months = dts.MonthLocator(interval=2)
+            ax.xaxis.set_major_locator(months)
+            date_format = dts.DateFormatter("%d-%m-%Y")
+            ax.xaxis.set_major_formatter(date_format)
+            ax.plot(x,y)
+            fig.autofmt_xdate()
+        return fig
+
+    
+    def map_coords(map_image, country_name, data_frame):
+        """Returns the map coordinates for the choosen country"""
+        map_width, map_height = map_image.size
+        country_data = data_frame.loc[(data_frame["Country/Region"] == country_name)]       
+        country_lon = 0.0
+        country_lat = 0.0
+        for lon in country_data["Long"].values:
+            country_lon = float(lon)
+        for lat in country_data["Lat"].values:
+            country_lat = float(lat)
+        
+        x = round((map_width / 360) * (180 + country_lon))
+        y = round((map_height / 180) * (90 - country_lat))
+        return x,y
+
+
     @app.route("/")
     def index():
-        """Return the index page of the website."""
+        """Returns the index page of the website"""
         return render_template("index.html",countries=countries,country_links=country_links)
 
 
     @app.route("/<country>")
     def country(country):
-        """Return a summarization of the choosen country"""
+        """Returns the page for the choosen country"""
         if country == "Choose country":
             return redirect("/data")
 
@@ -45,7 +93,7 @@ def serve(options):
         country_name = countries[country_index]
 
         country_data = final_doc_frame.loc[(final_doc_frame["Country"] == country_name)].iloc[:,1:]
-        html_code = Markup(country_data.to_html(index=False,border=0))
+        html_table = Markup(country_data.to_html(index=False,border=0))
 
         try:
             urban_data = urban_data_frame.loc[(urban_data_frame["Entity"] == country_name) & ((urban_data_frame["Year"] == "2017"))]
@@ -55,34 +103,42 @@ def serve(options):
         except:
             string = "Urbanization data is missing"
 
-        return render_template("country.html",html_code=html_code,string=string,country_name=country_name,country=country,countries=countries,country_links=country_links)
+        return render_template("country.html",html_table=html_table,string=string,country_name=country_name,country=country,countries=countries,country_links=country_links)
 
 
-    @app.route("/fig/<country>")
-    def fig(country):
-        """Return a graph for the choosen country."""
+    @app.route("/fig/<country>_<stat>.jpg")
+    def fig(country, stat):
+        """Uploads a graph to the page"""
         country_index = country_links.index(country)
         country_name = countries[country_index]
+        stat_name = stat.replace("%", " ")
 
-        fig, ax = plt.subplots()
-        ax.set_title(f"Deaths in {country_name}")
-        x = []
-        y = []
-        country_data = final_doc_frame.loc[(final_doc_frame["Country"] == country_name)]
-        country_deaths = country_data["Deaths"].values[0]
-        date = dts.date2num(datetime.datetime.strptime("04-15-2021","%m-%d-%Y"))
-        x.append(date)
-        y.append(country_deaths)
-
-        months = dts.MonthLocator(interval=2)
-        ax.xaxis.set_major_locator(months)
-        date_format = dts.DateFormatter("%Y %b")
-        ax.xaxis.set_major_formatter(date_format)
-        fig.autofmt_xdate()
-        ax.plot(x, y)
+        if stat_name == "Confirmed and Recovered":
+            fig = plot(country_name, stat_name, confirmed_data_frame, recovered_data_frame)
+        elif stat_name == "Deaths":
+            fig = plot(country_name, stat_name, deaths_data_frame)
 
         img = BytesIO()
-        fig.savefig(img, format="png")
+        fig.savefig(img, format="JPEG")
+        img.seek(0)
+
+        return send_file(img, mimetype='image/jpeg')
+
+
+    @app.route("/map/<country>_map.png")
+    def map(country):
+        """Uploads a map to the page"""
+        country_index = country_links.index(country)
+        country_name = countries[country_index]
+        map_image = Image.open("application/commands/static/images/blank_map.png")
+        marker_image = Image.open("application/commands/static/images/map_marker.png")
+
+        x,y = map_coords(map_image, country_name, deaths_data_frame)
+        resized_image = marker_image.resize((32,48), Image.ANTIALIAS)
+        map_image.alpha_composite(resized_image, dest=(x-16,y-48))
+
+        img = BytesIO()
+        map_image.save(img, format="PNG")
         img.seek(0)
 
         return send_file(img, mimetype='image/png')
@@ -90,7 +146,7 @@ def serve(options):
 
     @app.route("/data")
     def data():
-        """Return a table of data."""
+        """Returns the data page"""
 
         file_path = "data/final_doc.csv"
         with open(file_path, newline="") as f:
