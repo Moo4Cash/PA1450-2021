@@ -95,6 +95,13 @@ def serve(options):
 
         country_data = final_doc_frame.loc[(final_doc_frame["Country"] == country_name)].iloc[:,1:]
         html_table = Markup(country_data.to_html(index=False,border=0))
+        with open(str(country) + ".txt", "w") as write_file:
+            write_file.write(country_name + "\n\n")
+            write_file.write("Cases: " + str(cases[country_index]) + "\n")
+            write_file.write("Deaths: " + str(deaths[country_index]) + "\n")
+            write_file.write("Inhabitants: " + str(population[country_index]) + "\n")
+            write_file.write("Cases per 100 000 inhabitants: " + str(cases_cap[country_index]) + "\n")
+            write_file.write("Recovered: " + str(recovered[country_index]) + "\n")
 
         try:
             urban_data = urban_data_frame.loc[(urban_data_frame["Entity"] == country_name) & ((urban_data_frame["Year"] == "2017"))]
@@ -104,7 +111,7 @@ def serve(options):
         except:
             string = "Urbanization data is missing"
 
-        return render_template("country.html",html_table=html_table,string=string,country_name=country_name,country=country,countries=countries,country_links=country_links)
+        return render_template("country.html",html_table=html_table,string=string,country_name=country_name,country=country,countries=countries,country_links=country_links, file_to_download=str(country) + ".txt")
 
 
     @app.route("/fig/<country>_<stat>.jpg")
