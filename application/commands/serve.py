@@ -38,6 +38,7 @@ def serve(options):
         plt.style.use("seaborn")
         fig, ax = plt.subplots()
         ax.set_title(f"{stat_name} in {country_name}", color="#484b6a", family="sans-serif", name="Helvetica", size="12", weight="bold")
+        ax.ticklabel_format(style="plain")
         for data_frame in data_frames:
             x = []
             y = []
@@ -54,7 +55,7 @@ def serve(options):
             plt.setp(ax.get_yticklabels(), color="#484b6a", family="sans-serif", name="Helvetica", size="10")
             months = dts.MonthLocator(interval=2)
             ax.xaxis.set_major_locator(months)
-            date_format = dts.DateFormatter("%d-%m-%Y")
+            date_format = dts.DateFormatter("%b %Y")
             ax.xaxis.set_major_formatter(date_format)
             ax.plot(x,y)
             fig.autofmt_xdate()
