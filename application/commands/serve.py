@@ -1,6 +1,6 @@
 """Module for serving an API."""
 
-from flask import Flask, send_file, render_template, redirect, url_for, Markup
+from flask import Flask, send_file, render_template, redirect, url_for, Markup, send_from_directory
 import pandas as pd
 import csv
 import datetime
@@ -155,7 +155,7 @@ def serve(options):
         countries = time_series_confirmed["Country/Region"]
         provinces = time_series_confirmed["Province/State"]
         for x in range(0, len(countries)):
-            if country == countries[x] and country_index_start == -1:
+            if country == countries[x].lower() and country_index_start == -1:
                 country_index_start = x
                 country_index_stop = x
             elif country == countries[x]:
@@ -167,16 +167,17 @@ def serve(options):
             for i in range(country_index_start, country_index_stop):
                 country_file.write("," + provinces[i])
             country_file.write("\n")
+            columns = time_series_confirmed.columns.to_list()
 
-            for column in time_series_confirmed.columns():
+            for column in columns:
                 current_column = time_series_confirmed[column]
                 country_file.write(column)
                 for y in range(country_index_start, country_index_stop + 1):
-                    country_file.write("," + current_column[y])
+                    country_file.write("," + str(current_column[y]))
                 country_file.write("\n")
 
 
-        return send_file(filename, mimetype="text/csv")
+        return send_file(filename)
 
 
     @app.route("/data")
