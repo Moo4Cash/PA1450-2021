@@ -49,24 +49,12 @@ def serve(options):
         try:
             urban_data = urban_data_frame.loc[(urban_data_frame["Entity"] == country_name) & ((urban_data_frame["Year"] == "2017"))]
             urban_population = float(urban_data["Urban population (% of total)"].values[0])
-<<<<<<< HEAD
             string = f"{country_name} has {country_cases} confirmed cases and {country_deaths} deaths. {urban_population}% of {country_name} is urbanised.\n The country has {country_cases_per_cap} cases per 100 000 inhabitants and {country_inhabitants} currently live there."
         except:
             string = f"{country_name} has {country_cases} confirmed cases and {country_deaths} deaths. Urbanization data is missing"
-=======
-
-            return f"{country_name} has {country_cases} confirmed cases and {country_deaths} deaths. {urban_population}% of {country_name} is urbanised. \n The country has {country_cases_per_cap} cases per 100 000 inhabitants and {country_inhabitants} currently live there"
-        except:
-            return print(list(country_data.to_records(index=False)))
-
-    @app.route("/newestdata")
-    def newestdata():
-        """Return a table of data."""
->>>>>>> fixit
 
         return render_template("country.html",country=country_name,string=string)
 
-<<<<<<< HEAD
     @app.route("/data")
     def data():
         """Return a table of data."""
@@ -76,19 +64,6 @@ def serve(options):
             data = list(csv.reader(f))
 
         return render_template("data.html",data=data)
-=======
-        return render_template("newestdata.html",data=data)
-
-
-    @app.route("/casespercapita")
-    def display_cases_per_capita():
-        
-        capita_data_list = []
-        for x in range(0, len(final_doc_countries)):
-            capita_data_list.append(str(final_doc_countries[x]) + " " + str(final_doc_cases_cap[x]))
-
-        return render_template("casespercapita.html",capita_data_list=capita_data_list)
->>>>>>> fixit
 
     app.run(host=options.address, port=options.port, debug=True)
 
