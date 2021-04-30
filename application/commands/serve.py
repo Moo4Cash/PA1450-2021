@@ -145,11 +145,11 @@ def serve(options):
         return send_file(img, mimetype='image/png')
 
     @app.route("/download/<country>_data.csv")
-    def download_data(country, confirmed, recovered, deaths):
+    def download_data(country):
         """Uploads a csv document with data from the specified country to the page"""
-        time_series_confirmed = pd.read_csv("data\jhdata\COVID-19-master\csse_covid_19_data\csse_covid_19_time_series\time_series_covid19_confirmed_global.csv", dtype="category", sep=",")
-        time_series_deaths = pd.read_csv("data\jhdata\COVID-19-master\csse_covid_19_data\csse_covid_19_time_series\time_series_covid19_deaths_global.csv", dtype="category", sep=",")
-        time_series_recovered = pd.read_csv("data\jhdata\COVID-19-master\csse_covid_19_data\csse_covid_19_time_series\time_series_covid19_recovered_global.csv",dtype="category", sep=",")
+        time_series_confirmed = pd.read_csv("data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv", dtype="category", sep=",")
+        time_series_deaths = pd.read_csv("data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv", dtype="category", sep=",")
+        time_series_recovered = pd.read_csv("data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv",dtype="category", sep=",")
         dates_list = []
         for column in time_series_confirmed.columns:
             dates_list.append(column)
@@ -170,42 +170,40 @@ def serve(options):
 
         with open(filename, "w") as res_file:
             res_file.write("Confirmed")
-            for y in range(start_index, stop_index + 1):
+            for y in range(0, len(list_of_provinces)):
                 res_file.write("," + list_of_provinces[y])
-            res_file.write("," + country + "\n")
+            res_file.write("\n")
             for y in range(0, len(dates_list)):
-                total = 0
+
                 res_file.write(dates_list[y] + ",")
                 for i in range(start_index, stop_index + 1):
-                    total = total + int(time_series_confirmed.at(i, dates_list[y]))
                     res_file.write(time_series_confirmed.at(i, dates_list[y]))
-                res_file.write(str(total) + "\n")
+                res_file.write("\n")
             
             res_file.write("Deaths")
-            for y in range(start_index, stop_index + 1):
+            for y in range(0, len(list_of_provinces)):
                 res_file.write("," + list_of_provinces[y])
             res_file.write("," + country + "\n")
             for y in range(0, len(dates_list)):
-                total = 0
+
                 res_file.write(dates_list[y] + ",")
                 for i in range(start_index, stop_index + 1):
-                    total = total + int(time_series_deaths.at(i, dates_list[y]))
                     res_file.write(time_series_deaths.at(i, dates_list[y]))
-                res_file.write(str(total) + "\n")
+                res_file.write("\n")
             
             res_file.write("Recovered")
-            for y in range(start_index, stop_index + 1):
+            for y in range(0, len(list_of_provinces)):
                 res_file.write("," + list_of_provinces[y])
             res_file.write("," + country + "\n")
             for y in range(0, len(dates_list)):
-                total = 0
+
                 res_file.write(dates_list[y] + ",")
                 for i in range(start_index, stop_index + 1):
-                    total = total + int(time_series_recovered.at(i, dates_list[y]))
                     res_file.write(time_series_recovered.at(i, dates_list[y]))
-                res_file.write(str(total) + "\n")
+                res_file.write("\n")
+        res_file.close()
 
-        return send_file(filename)
+        return Response(filename, mimetype="text/csv")
 
 
     @app.route("/data")

@@ -54,6 +54,9 @@
                         <a class="downloadbtn" href="{{ url_for('fig', country=country, stat=('Deaths').replace(' ', '%')) }}" download><i class="fa fa-download"></i></a>
                     </div>
                 </div>
+                <div class="download_button">
+                    <a href="{{ url_for('download_data', country=country) }}" download>Download!</a>
+                </div>
             </div>
         </div>
     </body>
