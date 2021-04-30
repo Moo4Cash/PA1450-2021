@@ -144,6 +144,69 @@ def serve(options):
 
         return send_file(img, mimetype='image/png')
 
+    @app.route("/download/<country>_data.csv")
+    def download_data(country, confirmed, recovered, deaths):
+        """Uploads a csv document with data from the specified country to the page"""
+        time_series_confirmed = pd.read_csv("data\jhdata\COVID-19-master\csse_covid_19_data\csse_covid_19_time_series\time_series_covid19_confirmed_global.csv", dtype="category", sep=",")
+        time_series_deaths = pd.read_csv("data\jhdata\COVID-19-master\csse_covid_19_data\csse_covid_19_time_series\time_series_covid19_deaths_global.csv", dtype="category", sep=",")
+        time_series_recovered = pd.read_csv("data\jhdata\COVID-19-master\csse_covid_19_data\csse_covid_19_time_series\time_series_covid19_recovered_global.csv",dtype="category", sep=",")
+        dates_list = []
+        for column in time_series_confirmed.columns:
+            dates_list.append(column)
+        del dates_list[0:4]
+        
+        start_index = -1
+        stop_index = start_index
+        list_of_provinces = []
+        countries = time_series_confirmed["Country/Region"]
+        for x in range(0, len(countries)):
+            if countries[x] == country and start_index == -1:
+                list_of_provinces.append(time_series_confirmed.at(x, "Province/State"))
+                start_index = x
+                stop_index = start_index
+            elif countries[x] == country:
+                stop_index = stop_index + 1
+        filename = country + ".csv"
+
+        with open(filename, "w") as res_file:
+            res_file.write("Confirmed")
+            for y in range(start_index, stop_index + 1):
+                res_file.write("," + list_of_provinces[y])
+            res_file.write("," + country + "\n")
+            for y in range(0, len(dates_list)):
+                total = 0
+                res_file.write(dates_list[y] + ",")
+                for i in range(start_index, stop_index + 1):
+                    total = total + int(time_series_confirmed.at(i, dates_list[y]))
+                    res_file.write(time_series_confirmed.at(i, dates_list[y]))
+                res_file.write(str(total) + "\n")
+            
+            res_file.write("Deaths")
+            for y in range(start_index, stop_index + 1):
+                res_file.write("," + list_of_provinces[y])
+            res_file.write("," + country + "\n")
+            for y in range(0, len(dates_list)):
+                total = 0
+                res_file.write(dates_list[y] + ",")
+                for i in range(start_index, stop_index + 1):
+                    total = total + int(time_series_deaths.at(i, dates_list[y]))
+                    res_file.write(time_series_deaths.at(i, dates_list[y]))
+                res_file.write(str(total) + "\n")
+            
+            res_file.write("Recovered")
+            for y in range(start_index, stop_index + 1):
+                res_file.write("," + list_of_provinces[y])
+            res_file.write("," + country + "\n")
+            for y in range(0, len(dates_list)):
+                total = 0
+                res_file.write(dates_list[y] + ",")
+                for i in range(start_index, stop_index + 1):
+                    total = total + int(time_series_recovered.at(i, dates_list[y]))
+                    res_file.write(time_series_recovered.at(i, dates_list[y]))
+                res_file.write(str(total) + "\n")
+
+        return send_file(filename)
+
 
     @app.route("/data")
     def data():
