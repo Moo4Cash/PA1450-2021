@@ -39,3 +39,8 @@
     font-size: 20px;
     z-index: 1;
 }
+.download_link{
+    margin-top: 20px;
+    margin: auto;
+    padding: 20px;
+}

@@ -17,9 +17,9 @@ def serve(options):
     countries = covid_data_frame["Country_Region"].cat.categories
 
     country_links = [(item.replace(" ", "")).lower() for item in countries]
-    final_doc_frame = pd.read_csv("data\final_doc.csv", dtype="category", sep=",")
+    final_doc_frame = pd.read_csv("data/final_doc.csv", dtype="category", sep=",")
     final_doc_countries = final_doc_frame["Country"]
-    final_doc_cases_cap = final_doc_frame["CasesPer100 000"]
+    final_doc_cases_cap = final_doc_frame["Cases per 100 000"]
     final_doc_population = final_doc_frame["Inhabitants"].astype(int)
 
     @app.route("/")
