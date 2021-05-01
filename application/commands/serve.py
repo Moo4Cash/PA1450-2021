@@ -2,6 +2,7 @@
 
 from flask import Flask, send_file, render_template, redirect, url_for, Markup, send_from_directory
 import pandas as pd
+import pathlib as ph
 import csv
 import datetime
 import matplotlib.pyplot as plt
@@ -162,22 +163,18 @@ def serve(options):
                 country_index_stop = country_index_stop + 1
         filename = country + ".csv"
 
-        with open(filename, "w") as country_file:
-            country_file.write(country)
-            for i in range(country_index_start, country_index_stop):
-                country_file.write("," + provinces[i])
-            country_file.write("\n")
-            columns = time_series_confirmed.columns.to_list()
+        formated_dataframe_confirmed = time_series_confirmed.iloc[country_index_start : country_index_stop + 1, 4:]
+        formated_dataframe_deaths = time_series_deaths.iloc[country_index_start : country_index_stop + 1, 4:]
+        formated_dataframe_recovered = time_series_recovered
 
-            for column in columns:
-                current_column = time_series_confirmed[column]
-                country_file.write(column)
-                for y in range(country_index_start, country_index_stop + 1):
-                    country_file.write("," + str(current_column[y]))
-                country_file.write("\n")
+        with open(filename, "w") as write_to_file:
+            write_to_file.write(formated_dataframe_confirmed.to_csv)
+            write_to_file.write(formated_dataframe_deaths.to_csv)
+            write_to_file.write(formated_dataframe_recovered.to_csv)
 
+        path_of_file = ph.Path(__file__).parent.absolute()
 
-        return send_file(filename)
+        return send_from_directory(path_of_file, filename)
 
 
     @app.route("/data")
