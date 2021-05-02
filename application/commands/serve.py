@@ -145,7 +145,7 @@ def serve(options):
 
         return send_file(img, mimetype='image/png')
 
-    @app.route("/download/<country>_data.csv")
+    @app.route("/download/<country>.csv")
     def download_data(country):
         """Uploads a csv document with data from the specified country to the page"""
         time_series_confirmed = pd.read_csv("data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv", dtype="category", sep=",")
@@ -154,25 +154,33 @@ def serve(options):
         country_index_start = -1
         country_index_stop = 0
         countries = time_series_confirmed["Country/Region"]
+        print(countries)
         provinces = time_series_confirmed["Province/State"]
         for x in range(0, len(countries)):
             if country == countries[x].lower() and country_index_start == -1:
+                print(country)
                 country_index_start = x
                 country_index_stop = x
-            elif country == countries[x]:
+            elif country == countries[x].lower():
                 country_index_stop = country_index_stop + 1
         filename = country + ".csv"
 
-        formated_dataframe_confirmed = time_series_confirmed.iloc[country_index_start : country_index_stop + 1, 4:]
-        formated_dataframe_deaths = time_series_deaths.iloc[country_index_start : country_index_stop + 1, 4:]
-        formated_dataframe_recovered = time_series_recovered
+        formated_dates = time_series_confirmed.iloc[[0], 4:]
+        
+
+#       formated_dataframe_deaths = time_series_deaths.iloc[country_index_start : country_index_stop + 1, 4:]
+#       formated_dataframe_recovered = time_series_recovered.iloc[x]
 
         with open(filename, "w") as write_to_file:
-            write_to_file.write(formated_dataframe_confirmed.to_csv)
-            write_to_file.write(formated_dataframe_deaths.to_csv)
-            write_to_file.write(formated_dataframe_recovered.to_csv)
+            formated_dataframe_confirmed = time_series_confirmed.iloc[country_index_start:country_index_stop + 1, 4:]
+            write_to_file.write(formated_dataframe_confirmed.to_csv())
+            
+#            write_to_file.write(formated_dataframe_deaths.to_csv())
+#            write_to_file.write(formated_dataframe_recovered.to_csv())
 
-        path_of_file = ph.Path(__file__).parent.absolute()
+        path_of_file = ph.Path(__file__).parent.parent.parent.absolute()
+        print(country_index_start)
+        print(formated_dataframe_confirmed.to_csv())
 
         return send_from_directory(path_of_file, filename)
 
