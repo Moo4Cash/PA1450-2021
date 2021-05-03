@@ -165,7 +165,7 @@ def serve(options):
                 country_index_stop = country_index_stop + 1
         filename = country + ".csv"
 
-        formated_dates = time_series_confirmed.iloc[[0], 4:]
+        formated_dates = time_series_confirmed.iloc[[0], 0:]
         
 
 #       formated_dataframe_deaths = time_series_deaths.iloc[country_index_start : country_index_stop + 1, 4:]
@@ -173,7 +173,7 @@ def serve(options):
 
         with open(filename, "w") as write_to_file:
             write_to_file.write(country)
-            formated_dataframe_confirmed = time_series_confirmed.iloc[country_index_start:country_index_stop + 1, 4:]
+            formated_dataframe_confirmed = time_series_confirmed.iloc[country_index_start:country_index_stop + 1, 0:]
             write_to_file.write(formated_dataframe_confirmed.to_csv())
             
 #            write_to_file.write(formated_dataframe_deaths.to_csv())
