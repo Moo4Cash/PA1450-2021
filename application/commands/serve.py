@@ -154,7 +154,6 @@ def serve(options):
         country_index_start = -1
         country_index_stop = 0
         countries = time_series_confirmed["Country/Region"]
-        provinces = time_series_confirmed["Province/State"]
         for x in range(0, len(countries)):
             if country == countries[x].lower() and country_index_start == -1:
                 country_index_start = x
