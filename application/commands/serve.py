@@ -172,6 +172,7 @@ def serve(options):
 #       formated_dataframe_recovered = time_series_recovered.iloc[x]
 
         with open(filename, "w") as write_to_file:
+            write_to_file.write(country)
             formated_dataframe_confirmed = time_series_confirmed.iloc[country_index_start:country_index_stop + 1, 4:]
             write_to_file.write(formated_dataframe_confirmed.to_csv())
             
