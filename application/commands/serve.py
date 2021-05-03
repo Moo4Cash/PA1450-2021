@@ -17,10 +17,64 @@ def serve(options):
     countries = covid_data_frame["Country_Region"].cat.categories
 
     country_links = [(item.replace(" ", "")).lower() for item in countries]
+<<<<<<< HEAD
     final_doc_frame = pd.read_csv("data\final_doc.csv", dtype="category", sep=",")
     final_doc_countries = final_doc_frame["Country"]
     final_doc_cases_cap = final_doc_frame["CasesPer100 000"]
     final_doc_population = final_doc_frame["Inhabitants"].astype(int)
+=======
+
+    cases = final_doc_frame["Confirmed"]
+    deaths = final_doc_frame["Deaths"]
+    population = final_doc_frame["Inhabitants"]
+    cases_cap = final_doc_frame["Cases per 100 000"]
+    recovered = final_doc_frame["Recovered"]
+
+
+    def plot(country_name, stat_name, *data_frames):
+        """Returns a graph"""
+        plt.style.use("seaborn")
+        fig, ax = plt.subplots()
+        ax.set_title(f"{stat_name} in {country_name}", color="#484b6a", family="sans-serif", name="Helvetica", size="12", weight="bold")
+        for data_frame in data_frames:
+            x = []
+            y = []
+            country_data = data_frame.loc[(data_frame["Country/Region"] == country_name)].iloc[:,4:]
+            for column in country_data.columns:
+                date = dts.date2num(datetime.datetime.strptime(column,"%m/%d/%y"))
+                if date not in x:
+                    x.append(date)
+                total = 0
+                for value in country_data[column].values:
+                    total += int(value)
+                y.append(total)
+            plt.setp(ax.get_xticklabels(), color="#484b6a", family="sans-serif", name="Helvetica", size="10")
+            plt.setp(ax.get_yticklabels(), color="#484b6a", family="sans-serif", name="Helvetica", size="10")
+            months = dts.MonthLocator(interval=2)
+            ax.xaxis.set_major_locator(months)
+            date_format = dts.DateFormatter("%d-%m-%Y")
+            ax.xaxis.set_major_formatter(date_format)
+            ax.plot(x,y)
+            fig.autofmt_xdate()
+        return fig
+
+    
+    def map_coords(map_image, country_name, data_frame):
+        """Returns the map coordinates for the choosen country"""
+        map_width, map_height = map_image.size
+        country_data = data_frame.loc[(data_frame["Country/Region"] == country_name)]       
+        country_lon = 0.0
+        country_lat = 0.0
+        for lon in country_data["Long"].values:
+            country_lon = float(lon)
+        for lat in country_data["Lat"].values:
+            country_lat = float(lat)
+        
+        x = round((map_width / 360) * (180 + country_lon))
+        y = round((map_height / 180) * (90 - country_lat))
+        return x,y
+
+>>>>>>> parent of 9200c4e (kommentar)
 
     @app.route("/")
     def index():
