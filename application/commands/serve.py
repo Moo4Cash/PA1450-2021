@@ -154,34 +154,27 @@ def serve(options):
         country_index_start = -1
         country_index_stop = 0
         countries = time_series_confirmed["Country/Region"]
-        print(countries)
         provinces = time_series_confirmed["Province/State"]
         for x in range(0, len(countries)):
             if country == countries[x].lower() and country_index_start == -1:
-                print(country)
                 country_index_start = x
                 country_index_stop = x
             elif country == countries[x].lower():
                 country_index_stop = country_index_stop + 1
         filename = country + ".csv"
 
-        formated_dates = time_series_confirmed.iloc[[0], 0:]
-        
-
-#       formated_dataframe_deaths = time_series_deaths.iloc[country_index_start : country_index_stop + 1, 4:]
-#       formated_dataframe_recovered = time_series_recovered.iloc[x]
-
         with open(filename, "w") as write_to_file:
-            write_to_file.write(country)
+            write_to_file.write("Confirmed")
             formated_dataframe_confirmed = time_series_confirmed.iloc[country_index_start:country_index_stop + 1, 0:]
             write_to_file.write(formated_dataframe_confirmed.to_csv())
-            
-#            write_to_file.write(formated_dataframe_deaths.to_csv())
-#            write_to_file.write(formated_dataframe_recovered.to_csv())
+            write_to_file.write("\n\n\n" + "Deaths")
+            formated_dataframe_deaths = time_series_deaths.iloc[country_index_start:country_index_stop + 1, 0:]
+            write_to_file.write(formated_dataframe_deaths.to_csv())
+            write_to_file.write("\n\n\n" + "Recovered")
+            formated_dataframe_recovered = time_series_recovered.iloc[country_index_start:country_index_stop + 1, 0:]
+            write_to_file.write(formated_dataframe_recovered.to_csv())
 
         path_of_file = ph.Path(__file__).parent.parent.parent.absolute()
-        print(country_index_start)
-        print(formated_dataframe_confirmed.to_csv())
 
         return send_from_directory(path_of_file, filename)
 
