@@ -50,7 +50,11 @@
                                 {% if row.index(cell) == 0 %}
                                     <td><a href='{{ (cell.replace(" ", "")).lower() }}'>{{ cell }}</a></td>
                                 {% else %}
-                                    <td>{{ cell }}</td>
+                                    {% if cell == "" %}
+                                        <td>NaN</td>
+                                    {% else %}
+                                        <td>{{ cell }}</td>
+                                    {% endif %}
                                 {% endif %}
                             {% endfor %}
                         </tr>

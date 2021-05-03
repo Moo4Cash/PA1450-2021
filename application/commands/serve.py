@@ -1,8 +1,7 @@
 """Module for serving an API."""
 
-from flask import Flask, send_file, render_template, redirect, url_for, Markup, send_from_directory
+from flask import Flask, send_file, render_template, redirect, url_for, Markup
 import pandas as pd
-import pathlib as ph
 import csv
 import datetime
 import matplotlib.pyplot as plt
@@ -97,15 +96,7 @@ def serve(options):
         country_data = final_doc_frame.loc[(final_doc_frame["Country"] == country_name)].iloc[:,1:]
         html_table = Markup(country_data.to_html(index=False,border=0))
 
-        try:
-            urban_data = urban_data_frame.loc[(urban_data_frame["Entity"] == country_name) & ((urban_data_frame["Year"] == "2017"))]
-            urban_population = float(urban_data["Urban population (% of total)"].values[0])
-
-            string = f"{urban_population}% of {country_name} is urbanised."
-        except:
-            string = "Urbanization data is missing"
-
-        return render_template("country.html",html_table=html_table,string=string,country_name=country_name,country=country,countries=countries,country_links=country_links)
+        return render_template("country.html",html_table=html_table,country_name=country_name,country=country,countries=countries,country_links=country_links)
 
 
     @app.route("/fig/<country>_<stat>.jpg")
@@ -144,38 +135,6 @@ def serve(options):
         img.seek(0)
 
         return send_file(img, mimetype='image/png')
-
-    @app.route("/download/<country>.csv")
-    def download_data(country):
-        """Uploads a csv document with data from the specified country to the page"""
-        time_series_confirmed = pd.read_csv("data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv", dtype="category", sep=",")
-        time_series_deaths = pd.read_csv("data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv", dtype="category", sep=",")
-        time_series_recovered = pd.read_csv("data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv",dtype="category", sep=",")
-        country_index_start = -1
-        country_index_stop = 0
-        countries = time_series_confirmed["Country/Region"]
-        for x in range(0, len(countries)):
-            if country == countries[x].lower() and country_index_start == -1:
-                country_index_start = x
-                country_index_stop = x
-            elif country == countries[x].lower():
-                country_index_stop = country_index_stop + 1
-        filename = country + ".csv"
-
-        with open(filename, "w") as write_to_file:
-            write_to_file.write("Confirmed")
-            formated_dataframe_confirmed = time_series_confirmed.iloc[country_index_start:country_index_stop + 1, 0:]
-            write_to_file.write(formated_dataframe_confirmed.to_csv())
-            write_to_file.write("\n\n\n" + "Deaths")
-            formated_dataframe_deaths = time_series_deaths.iloc[country_index_start:country_index_stop + 1, 0:]
-            write_to_file.write(formated_dataframe_deaths.to_csv())
-            write_to_file.write("\n\n\n" + "Recovered")
-            formated_dataframe_recovered = time_series_recovered.iloc[country_index_start:country_index_stop + 1, 0:]
-            write_to_file.write(formated_dataframe_recovered.to_csv())
-
-        path_of_file = ph.Path(__file__).parent.parent.parent.absolute()
-
-        return send_from_directory(path_of_file, filename)
 
 
     @app.route("/data")
