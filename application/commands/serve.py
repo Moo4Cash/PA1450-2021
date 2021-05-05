@@ -143,9 +143,6 @@ def serve(options):
         """Uploads a csv document with data from the specified country to the page"""
         country_index = country_links.index(country)
         country_name = countries[country_index]
-        country_index_start = -1
-        country_index_stop = 0
-        countries_lst = confirmed_data_frame["Country/Region"]
 
         filename = country + ".csv"
 
