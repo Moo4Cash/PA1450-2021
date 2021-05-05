@@ -141,12 +141,9 @@ def serve(options):
     @app.route("/download/<country>.csv")
     def download_data(country):
         """Uploads a csv document with data from the specified country to the page"""
-        time_series_confirmed = pd.read_csv("data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv", dtype="category", sep=",")
-        time_series_deaths = pd.read_csv("data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv", dtype="category", sep=",")
-        time_series_recovered = pd.read_csv("data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv",dtype="category", sep=",")
         country_index_start = -1
         country_index_stop = 0
-        countries = time_series_confirmed["Country/Region"]
+        countries = confirmed_data_frame["Country/Region"]
         for x in range(0, len(countries)):
             if country == countries[x].lower() and country_index_start == -1:
                 country_index_start = x
@@ -157,13 +154,13 @@ def serve(options):
 
         with open(filename, "w") as write_to_file:
             write_to_file.write("Confirmed")
-            formated_dataframe_confirmed = time_series_confirmed.iloc[country_index_start:country_index_stop + 1, 0:]
+            formated_dataframe_confirmed = confirmed_data_frame.iloc[country_index_start:country_index_stop + 1, 0:]
             write_to_file.write(formated_dataframe_confirmed.to_csv())
             write_to_file.write("\n\n\n" + "Deaths")
-            formated_dataframe_deaths = time_series_deaths.iloc[country_index_start:country_index_stop + 1, 0:]
+            formated_dataframe_deaths = deaths_data_frame.iloc[country_index_start:country_index_stop + 1, 0:]
             write_to_file.write(formated_dataframe_deaths.to_csv())
             write_to_file.write("\n\n\n" + "Recovered")
-            formated_dataframe_recovered = time_series_recovered.iloc[country_index_start:country_index_stop + 1, 0:]
+            formated_dataframe_recovered = recovered_data_frame.iloc[country_index_start:country_index_stop + 1, 0:]
             write_to_file.write(formated_dataframe_recovered.to_csv())
 
         path_of_file = ph.Path(__file__).parent.parent.parent.absolute()
