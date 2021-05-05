@@ -1,8 +1,12 @@
 """Module for serving an API."""
 
-from flask import Flask, send_file, render_template, redirect
+
 import matplotlib
+
+from flask import Flask, send_file, render_template, redirect, url_for, Markup, send_from_directory
+
 import pandas as pd
+import pathlib as ph
 import csv
 
 def serve(options):
@@ -17,13 +21,8 @@ def serve(options):
     countries = covid_data_frame["Country_Region"].cat.categories
 
     country_links = [(item.replace(" ", "")).lower() for item in countries]
-<<<<<<< HEAD
-    final_doc_frame = pd.read_csv("data\final_doc.csv", dtype="category", sep=",")
-    final_doc_countries = final_doc_frame["Country"]
-    final_doc_cases_cap = final_doc_frame["CasesPer100 000"]
-    final_doc_population = final_doc_frame["Inhabitants"].astype(int)
-=======
 
+    final_doc_frame = pd.read_csv("data\final_doc.csv", dtype="category", sep=",")
     cases = final_doc_frame["Confirmed"]
     deaths = final_doc_frame["Deaths"]
     population = final_doc_frame["Inhabitants"]
@@ -74,7 +73,7 @@ def serve(options):
         y = round((map_height / 180) * (90 - country_lat))
         return x,y
 
->>>>>>> parent of 9200c4e (kommentar)
+
 
     @app.route("/")
     def index():
@@ -100,14 +99,31 @@ def serve(options):
         for value in country_data["Confirmed"].values:
             country_cases += int(value)
 
+
         try:
             urban_data = urban_data_frame.loc[(urban_data_frame["Entity"] == country_name) & ((urban_data_frame["Year"] == "2017"))]
             urban_population = float(urban_data["Urban population (% of total)"].values[0])
-<<<<<<< HEAD
+
             string = f"{country_name} has {country_cases} confirmed cases and {country_deaths} deaths. {urban_population}% of {country_name} is urbanised.\n The country has {country_cases_per_cap} cases per 100 000 inhabitants and {country_inhabitants} currently live there."
         except:
             string = f"{country_name} has {country_cases} confirmed cases and {country_deaths} deaths. Urbanization data is missing"
-=======
+
+
+        return render_template("country.html",html_table=html_table,country_name=country_name,country=country,countries=countries,country_links=country_links)
+
+
+    @app.route("/fig/<country>_<stat>.jpg")
+    def fig(country, stat):
+        """Uploads a graph to the page"""
+        country_index = country_links.index(country)
+        country_name = countries[country_index]
+        stat_name = stat.replace("%", " ")
+
+        if stat_name == "Confirmed and Recovered":
+            fig = plot(country_name, stat_name, confirmed_data_frame, recovered_data_frame)
+        elif stat_name == "Deaths":
+            fig = plot(country_name, stat_name, deaths_data_frame)
+
 
             return f"{country_name} has {country_cases} confirmed cases and {country_deaths} deaths. {urban_population}% of {country_name} is urbanised. \n The country has {country_cases_per_cap} cases per 100 000 inhabitants and {country_inhabitants} currently live there"
         except:
@@ -116,11 +132,45 @@ def serve(options):
     @app.route("/newestdata")
     def newestdata():
         """Return a table of data."""
->>>>>>> fixit
+
 
         return render_template("country.html",country=country_name,string=string)
 
-<<<<<<< HEAD
+
+    @app.route("/download/<country>.csv")
+    def download_data(country):
+        """Uploads a csv document with data from the specified country to the page"""
+        time_series_confirmed = pd.read_csv("data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv", dtype="category", sep=",")
+        time_series_deaths = pd.read_csv("data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv", dtype="category", sep=",")
+        time_series_recovered = pd.read_csv("data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv",dtype="category", sep=",")
+        country_index_start = -1
+        country_index_stop = 0
+        countries = time_series_confirmed["Country/Region"]
+        for x in range(0, len(countries)):
+            if country == countries[x].lower() and country_index_start == -1:
+                country_index_start = x
+                country_index_stop = x
+            elif country == countries[x].lower():
+                country_index_stop = country_index_stop + 1
+        filename = country + ".csv"
+
+        with open(filename, "w") as write_to_file:
+            write_to_file.write("Confirmed")
+            formated_dataframe_confirmed = time_series_confirmed.iloc[country_index_start:country_index_stop + 1, 0:]
+            write_to_file.write(formated_dataframe_confirmed.to_csv())
+            write_to_file.write("\n\n\n" + "Deaths")
+            formated_dataframe_deaths = time_series_deaths.iloc[country_index_start:country_index_stop + 1, 0:]
+            write_to_file.write(formated_dataframe_deaths.to_csv())
+            write_to_file.write("\n\n\n" + "Recovered")
+            formated_dataframe_recovered = time_series_recovered.iloc[country_index_start:country_index_stop + 1, 0:]
+            write_to_file.write(formated_dataframe_recovered.to_csv())
+
+        path_of_file = ph.Path(__file__).parent.parent.parent.absolute()
+
+        return send_from_directory(path_of_file, filename)
+
+
+
     @app.route("/data")
     def data():
         """Return a table of data."""
@@ -130,7 +180,7 @@ def serve(options):
             data = list(csv.reader(f))
 
         return render_template("data.html",data=data)
-=======
+
         return render_template("newestdata.html",data=data)
 
 
@@ -142,7 +192,6 @@ def serve(options):
             capita_data_list.append(str(final_doc_countries[x]) + " " + str(final_doc_cases_cap[x]))
 
         return render_template("casespercapita.html",capita_data_list=capita_data_list)
->>>>>>> fixit
 
     app.run(host=options.address, port=options.port, debug=True)
 
