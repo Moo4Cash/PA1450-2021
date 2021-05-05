@@ -1,28 +1,32 @@
 """Module for serving an API."""
 
-
-import matplotlib
-
 from flask import Flask, send_file, render_template, redirect, url_for, Markup, send_from_directory
-
 import pandas as pd
 import pathlib as ph
 import csv
+import datetime
+import matplotlib.pyplot as plt
+import matplotlib.dates as dts
+from io import BytesIO
+from PIL import Image
+
 
 def serve(options):
     """Serve an API."""
 
     # Create a Flask application
-
     app = Flask(__name__,template_folder="templates", static_folder="static")
 
-    covid_data_frame = pd.read_csv("data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_daily_reports/04-15-2021.csv", dtype="category", sep=",")
-    urban_data_frame = pd.read_csv("data/urban_data/share-of-population-urban.csv", dtype="category", sep=",")
-    countries = covid_data_frame["Country_Region"].cat.categories
 
+    deaths_data_frame = pd.read_csv("data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv", dtype="category", sep=",")
+    confirmed_data_frame = pd.read_csv("data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv", dtype="category", sep=",")
+    recovered_data_frame = pd.read_csv("data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv", dtype="category", sep=",")
+    urban_data_frame = pd.read_csv("data/urban_data/share-of-population-urban.csv", dtype="category", sep=",")
+    final_doc_frame = pd.read_csv("data/final_doc.csv", dtype="category", sep=",")
+
+    countries = final_doc_frame["Country"]
     country_links = [(item.replace(" ", "")).lower() for item in countries]
 
-    final_doc_frame = pd.read_csv("data\final_doc.csv", dtype="category", sep=",")
     cases = final_doc_frame["Confirmed"]
     deaths = final_doc_frame["Deaths"]
     population = final_doc_frame["Inhabitants"]
@@ -35,6 +39,7 @@ def serve(options):
         plt.style.use("seaborn")
         fig, ax = plt.subplots()
         ax.set_title(f"{stat_name} in {country_name}", color="#484b6a", family="sans-serif", name="Helvetica", size="12", weight="bold")
+        ax.ticklabel_format(style="plain")
         for data_frame in data_frames:
             x = []
             y = []
@@ -51,7 +56,7 @@ def serve(options):
             plt.setp(ax.get_yticklabels(), color="#484b6a", family="sans-serif", name="Helvetica", size="10")
             months = dts.MonthLocator(interval=2)
             ax.xaxis.set_major_locator(months)
-            date_format = dts.DateFormatter("%d-%m-%Y")
+            date_format = dts.DateFormatter("%b %Y")
             ax.xaxis.set_major_formatter(date_format)
             ax.plot(x,y)
             fig.autofmt_xdate()
@@ -74,40 +79,23 @@ def serve(options):
         return x,y
 
 
-
     @app.route("/")
     def index():
-        """Return the index page of the website."""
+        """Returns the index page of the website"""
         return render_template("index.html",countries=countries,country_links=country_links)
+
 
     @app.route("/<country>")
     def country(country):
-        """Return a summarization of the choosen country"""
+        """Returns the page for the choosen country"""
         if country == "Choose country":
             return redirect("/data")
 
         country_index = country_links.index(country)
         country_name = countries[country_index]
-        country_cases_per_cap = final_doc_cases_cap[country_index]
-        country_inhabitants = final_doc_population[country_index]
-        country_deaths = 0
-        country_cases = 0
-        country_data = covid_data_frame.loc[(covid_data_frame["Country_Region"] == country_name)]
 
-        for value in country_data["Deaths"].values:
-            country_deaths += int(value)
-        for value in country_data["Confirmed"].values:
-            country_cases += int(value)
-
-
-        try:
-            urban_data = urban_data_frame.loc[(urban_data_frame["Entity"] == country_name) & ((urban_data_frame["Year"] == "2017"))]
-            urban_population = float(urban_data["Urban population (% of total)"].values[0])
-
-            string = f"{country_name} has {country_cases} confirmed cases and {country_deaths} deaths. {urban_population}% of {country_name} is urbanised.\n The country has {country_cases_per_cap} cases per 100 000 inhabitants and {country_inhabitants} currently live there."
-        except:
-            string = f"{country_name} has {country_cases} confirmed cases and {country_deaths} deaths. Urbanization data is missing"
-
+        country_data = final_doc_frame.loc[(final_doc_frame["Country"] == country_name)].iloc[:,1:]
+        html_table = Markup(country_data.to_html(index=False,border=0))
 
         return render_template("country.html",html_table=html_table,country_name=country_name,country=country,countries=countries,country_links=country_links)
 
@@ -124,17 +112,30 @@ def serve(options):
         elif stat_name == "Deaths":
             fig = plot(country_name, stat_name, deaths_data_frame)
 
+        img = BytesIO()
+        fig.savefig(img, format="JPEG")
+        img.seek(0)
 
-            return f"{country_name} has {country_cases} confirmed cases and {country_deaths} deaths. {urban_population}% of {country_name} is urbanised. \n The country has {country_cases_per_cap} cases per 100 000 inhabitants and {country_inhabitants} currently live there"
-        except:
-            return print(list(country_data.to_records(index=False)))
-
-    @app.route("/newestdata")
-    def newestdata():
-        """Return a table of data."""
+        return send_file(img, mimetype='image/jpeg')
 
 
-        return render_template("country.html",country=country_name,string=string)
+    @app.route("/map/<country>_map.png")
+    def map(country):
+        """Uploads a map to the page"""
+        country_index = country_links.index(country)
+        country_name = countries[country_index]
+        map_image = Image.open("application/commands/static/images/blank_map.png")
+        marker_image = Image.open("application/commands/static/images/map_marker.png")
+
+        x,y = map_coords(map_image, country_name, deaths_data_frame)
+        resized_image = marker_image.resize((32,48), Image.ANTIALIAS)
+        map_image.alpha_composite(resized_image, dest=(x-16,y-48))
+
+        img = BytesIO()
+        map_image.save(img, format="PNG")
+        img.seek(0)
+
+        return send_file(img, mimetype='image/png')
 
 
     @app.route("/download/<country>.csv")
@@ -167,28 +168,16 @@ def serve(options):
         return send_from_directory(path_of_file, filename)
 
 
-
     @app.route("/data")
     def data():
-        """Return a table of data."""
+        """Returns the data page"""
 
-        file_path = "data/jhdata/COVID-19-master/csse_covid_19_data/csse_covid_19_daily_reports/04-15-2021.csv"
+        file_path = "data/final_doc.csv"
         with open(file_path, newline="") as f:
             data = list(csv.reader(f))
 
-        return render_template("data.html",data=data)
+        return render_template("data.html",data=data,countries=countries,country_links=country_links)
 
-        return render_template("newestdata.html",data=data)
-
-
-    @app.route("/casespercapita")
-    def display_cases_per_capita():
-        
-        capita_data_list = []
-        for x in range(0, len(final_doc_countries)):
-            capita_data_list.append(str(final_doc_countries[x]) + " " + str(final_doc_cases_cap[x]))
-
-        return render_template("casespercapita.html",capita_data_list=capita_data_list)
 
     app.run(host=options.address, port=options.port, debug=True)
 
