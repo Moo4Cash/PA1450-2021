@@ -141,26 +141,23 @@ def serve(options):
     @app.route("/download/<country>.csv")
     def download_data(country):
         """Uploads a csv document with data from the specified country to the page"""
+        country_index = country_links.index(country)
+        country_name = countries[country_index]
         country_index_start = -1
         country_index_stop = 0
-        countries = confirmed_data_frame["Country/Region"]
-        for x in range(0, len(countries)):
-            if country == countries[x].lower() and country_index_start == -1:
-                country_index_start = x
-                country_index_stop = x
-            elif country == countries[x].lower():
-                country_index_stop = country_index_stop + 1
+        countries_lst = confirmed_data_frame["Country/Region"]
+
         filename = country + ".csv"
 
         with open(filename, "w") as write_to_file:
             write_to_file.write("Confirmed")
-            formated_dataframe_confirmed = confirmed_data_frame.iloc[country_index_start:country_index_stop + 1, 0:]
+            formated_dataframe_confirmed = confirmed_data_frame.loc[(confirmed_data_frame["Country/Region"] == country_name)]
             write_to_file.write(formated_dataframe_confirmed.to_csv())
             write_to_file.write("\n\n\n" + "Deaths")
-            formated_dataframe_deaths = deaths_data_frame.iloc[country_index_start:country_index_stop + 1, 0:]
+            formated_dataframe_deaths = deaths_data_frame.loc[(deaths_data_frame["Country/Region"] == country_name)]
             write_to_file.write(formated_dataframe_deaths.to_csv())
             write_to_file.write("\n\n\n" + "Recovered")
-            formated_dataframe_recovered = recovered_data_frame.iloc[country_index_start:country_index_stop + 1, 0:]
+            formated_dataframe_recovered = recovered_data_frame.loc[(recovered_data_frame["Country/Region"] == country_name)]
             write_to_file.write(formated_dataframe_recovered.to_csv())
 
         path_of_file = ph.Path(__file__).parent.parent.parent.absolute()
