@@ -34,16 +34,49 @@ def serve(options):
     recovered = final_doc_frame["Recovered"]
 
 
-    def plot(country_name, stat_name, *data_frames):
+    def plot_country(country_name, stat_name, *data_frames):
         """Returns a graph"""
         plt.style.use("seaborn")
         fig, ax = plt.subplots()
         ax.set_title(f"{stat_name} in {country_name}", color="#484b6a", family="sans-serif", name="Helvetica", size="12", weight="bold")
         ax.ticklabel_format(style="plain")
+        ax.set_facecolor("#e4e5f1")
+        fig.set_facecolor("#fafafa")
         for data_frame in data_frames:
             x = []
             y = []
             country_data = data_frame.loc[(data_frame["Country/Region"] == country_name)].iloc[:,4:]
+            for column in country_data.columns:
+                date = dts.date2num(datetime.datetime.strptime(column,"%m/%d/%y"))
+                if date not in x:
+                    x.append(date)
+                total = 0
+                for value in country_data[column].values:
+                    total += int(value)
+                y.append(total)
+            plt.setp(ax.get_xticklabels(), color="#484b6a", family="sans-serif", name="Helvetica", size="10")
+            plt.setp(ax.get_yticklabels(), color="#484b6a", family="sans-serif", name="Helvetica", size="10")
+            months = dts.MonthLocator(interval=2)
+            ax.xaxis.set_major_locator(months)
+            date_format = dts.DateFormatter("%b %Y")
+            ax.xaxis.set_major_formatter(date_format)
+            ax.plot(x,y)
+            fig.autofmt_xdate()
+        return fig
+
+
+    def plot_province(country_name, province_name, stat_name, *data_frames):
+        """Returns a graph"""
+        plt.style.use("seaborn")
+        fig, ax = plt.subplots()
+        ax.set_title(f"{stat_name} in {province_name}", color="#484b6a", family="sans-serif", name="Helvetica", size="12", weight="bold")
+        ax.ticklabel_format(style="plain")
+        ax.set_facecolor("#e4e5f1")
+        fig.set_facecolor("#fafafa")
+        for data_frame in data_frames:
+            x = []
+            y = []
+            country_data = data_frame.loc[(data_frame["Country/Region"] == country_name) & (data_frame["Province/State"] == province_name)].iloc[:,4:]
             for column in country_data.columns:
                 date = dts.date2num(datetime.datetime.strptime(column,"%m/%d/%y"))
                 if date not in x:
@@ -94,29 +127,55 @@ def serve(options):
         country_index = country_links.index(country)
         country_name = countries[country_index]
 
+        provinces = []
+        province_data = deaths_data_frame.loc[(deaths_data_frame["Country/Region"] == country_name)]["Province/State"]
+        for province in province_data:
+            if type(province) == str:
+                provinces.append(province)
+
         country_data = final_doc_frame.loc[(final_doc_frame["Country"] == country_name)].iloc[:,1:]
         html_table = Markup(country_data.to_html(index=False,border=0))
 
-        return render_template("country.html",html_table=html_table,country_name=country_name,country=country,countries=countries,country_links=country_links)
+        return render_template("country.html",html_table=html_table,country_name=country_name,country=country,countries=countries,country_links=country_links,provinces=provinces)
 
 
     @app.route("/fig/<country>_<stat>.jpg")
-    def fig(country, stat):
+    def fig_country(country, stat):
         """Uploads a graph to the page"""
         country_index = country_links.index(country)
         country_name = countries[country_index]
         stat_name = stat.replace("%", " ")
 
         if stat_name == "Confirmed and Recovered":
-            fig = plot(country_name, stat_name, confirmed_data_frame, recovered_data_frame)
+            fig = plot_country(country_name, stat_name, confirmed_data_frame, recovered_data_frame)
         elif stat_name == "Deaths":
-            fig = plot(country_name, stat_name, deaths_data_frame)
+            fig = plot_country(country_name, stat_name, deaths_data_frame)
 
         img = BytesIO()
         fig.savefig(img, format="JPEG")
         img.seek(0)
 
-        return send_file(img, mimetype='image/jpeg')
+        return send_file(img, mimetype='image/jpg')
+
+
+    @app.route("/fig/<country>_<province>_<stat>.jpg")
+    def fig_province(country, province, stat):
+        """Uploads a graph to the page"""
+        country_index = country_links.index(country)
+        country_name = countries[country_index]
+        province_name = province.replace('%', ' ')
+        stat_name = stat.replace("%", " ")
+
+        if stat_name == "Confirmed and Recovered":
+            fig = plot_province(country_name, province_name, stat_name, confirmed_data_frame, recovered_data_frame)
+        elif stat_name == "Deaths":
+            fig = plot_province(country_name, province_name, stat_name, deaths_data_frame)
+
+        img = BytesIO()
+        fig.savefig(img, format="JPEG")
+        img.seek(0)
+
+        return send_file(img, mimetype='image/jpg')
 
 
     @app.route("/map/<country>_map.png")
