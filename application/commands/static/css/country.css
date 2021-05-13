@@ -39,8 +39,44 @@
     font-size: 20px;
     z-index: 1;
 }
-.download_link{
-    margin-top: 20px;
-    margin: auto;
-    padding: 20px;
+.countrySheet{
+    position: relative;
+    font-size: 18px; 
+    background-color:#f0f0f0; 
+    padding: 12px;
+    top: 20px;
+    border-radius: 5px; 
+    z-index: 1;
+}
+.collapsible{
+    background-color:#f0f0f0;
+    color:#484b6a;
+    cursor: pointer;
+    padding: 18px;
+    margin-top: 2px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 18px;
+}
+.expanded, .collapsible:hover{
+    background-color:#e4e5f1;
+}
+.collapsible:after{
+    content: "\02795";
+    color:#484b6a;
+    float: right;
+    margin-left: 5px;
+    font-size: 10px;
+}
+  
+.expanded:after{
+    content: "\2796";
+}
+.collapscontent{
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
 }

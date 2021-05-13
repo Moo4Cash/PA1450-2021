@@ -7,7 +7,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="description" content="PA1450"/>
         <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon">  
-        <script src="static/javascript/sorttable.js"></script>
+        <script type="text/javascript" src="static/javascript/sorttable.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link type="text/css" rel="stylesheet" href="static/css/style.css"/>
         <link type="text/css" rel="stylesheet" href="static/css/header.css"/>
@@ -16,7 +16,7 @@
     </head>
     <body>
         <div class="header">
-            <a href="/" class="logo">Covid statistics app</a>
+            <a href="/" class="logo"><i class="fas fa-chart-line"></i> Covid statistics app</a>
             <div class="header-right">
                 <a href="/">Home</a>
                 <a class="active" href="/data">Data</a>
@@ -50,7 +50,11 @@
                                 {% if row.index(cell) == 0 %}
                                     <td><a href='{{ (cell.replace(" ", "")).lower() }}'>{{ cell }}</a></td>
                                 {% else %}
-                                    <td>{{ cell }}</td>
+                                    {% if cell == "" %}
+                                        <td>NaN</td>
+                                    {% else %}
+                                        <td>{{ cell }}</td>
+                                    {% endif %}
                                 {% endif %}
                             {% endfor %}
                         </tr>

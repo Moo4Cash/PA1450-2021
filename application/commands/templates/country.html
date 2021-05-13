@@ -7,7 +7,8 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="description" content="PA1450"/>
         <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon">  
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script type="text/javascript" src="static/javascript/collapsible.js"></script>
+        <script src="https://kit.fontawesome.com/0c9013e95a.js" crossorigin="anonymous"></script>
         <link type="text/css" rel="stylesheet" href="static/css/style.css"/>
         <link type="text/css" rel="stylesheet" href="static/css/header.css"/>
         <link type="text/css" rel="stylesheet" href="static/css/table.css"/>
@@ -16,7 +17,7 @@
     </head>
     <body>
         <div class="header">
-            <a href="/" class="logo">Covid statistics app</a>
+            <a href="/" class="logo"><i class="fas fa-chart-line"></i> Covid statistics app</a>
             <div class="header-right">
                 <a href="/">Home</a>
                 <a href="/data">Data</a>
@@ -46,17 +47,32 @@
                 <p>{{string}}</p>
                 <div class="graphs">
                     <div class="graphA">
-                        <img src="{{ url_for('fig', country=country, stat=('Confirmed and Recovered').replace(' ', '%')) }}">
-                        <a class="downloadbtn" href="{{ url_for('fig', country=country, stat=('Confirmed and Recovered').replace(' ', '%')) }}" download><i class="fa fa-download"></i></a>
+                        <img src="{{ url_for('fig_country', country=country, stat=('Confirmed and Recovered').replace(' ', '%')) }}">
+                        <a class="downloadbtn" href="{{ url_for('fig_country', country=country, stat=('Confirmed and Recovered').replace(' ', '%')) }}" download><i class="fas fa-download"></i></a>
                     </div>
                     <div class="graphB">
-                        <img src="{{ url_for('fig', country=country, stat=('Deaths').replace(' ', '%')) }}">
-                        <a class="downloadbtn" href="{{ url_for('fig', country=country, stat=('Deaths').replace(' ', '%')) }}" download><i class="fa fa-download"></i></a>
+                        <img src="{{ url_for('fig_country', country=country, stat=('Deaths').replace(' ', '%')) }}">
+                        <a class="downloadbtn" href="{{ url_for('fig_country', country=country, stat=('Deaths').replace(' ', '%')) }}" download><i class="fas fa-download"></i></a>
                     </div>
                 </div>
-                <div class="download_link">
-                    <a href=""></a>
+                <div class="provinces">
+                    {% for province in provinces %}
+                        <button class="collapsible" type="button" onclick="collapse(this)">{{province}}</button>
+                        <div class="collapscontent">
+                            <div class="graphs">
+                                <div class="graphA">
+                                    <img src="{{ url_for('fig_province', country=country, province=province.replace(' ', '%'), stat=('Confirmed and Recovered').replace(' ', '%')) }}">
+                                    <a class="downloadbtn" href="{{ url_for('fig_province', country=country, province=province.replace(' ', '%'), stat=('Confirmed and Recovered').replace(' ', '%')) }}" download><i class="fas fa-download"></i></a>
+                                </div>
+                                <div class="graphB">
+                                    <img src="{{ url_for('fig_province', country=country, province=province.replace(' ', '%'), stat=('Deaths').replace(' ', '%')) }}">
+                                    <a class="downloadbtn" href="{{ url_for('fig_province', country=country, province=province.replace(' ', '%'), stat=('Deaths').replace(' ', '%')) }}" download><i class="fas fa-download"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
+                <a class="countrySheet" href="{{ url_for('download_data', country=country) }}" download><i class="fas fa-download"></i> Download data for {{country_name}}</a>
             </div>
         </div>
     </body>
